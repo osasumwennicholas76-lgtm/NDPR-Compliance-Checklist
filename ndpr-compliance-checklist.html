@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDPR Compliance Checklist</title>
+<style>
+  :root{
+    --navy: #0c1f3d;
+    --navy-light: #12294f;
+    --navy-hover: #16305c;
+    --green: #17a34a;
+    --green-dark: #128a3e;
+    --green-soft: #e7f7ee;
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --border: #e3e8f0;
+    --text: #16213e;
+    --text-muted: #6b7789;
+    --amber: #e8a723;
+    --red: #e0483e;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  .app{display:flex;min-height:100vh;}
+
+  /* Sidebar */
+  .sidebar{width:230px;background:var(--navy);color:#cfd9ec;flex-shrink:0;display:flex;flex-direction:column;padding:22px 14px;}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 10px 22px 10px;color:#fff;}
+  .brand-icon{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .brand-text{font-weight:700;font-size:15px;line-height:1.25;}
+  .nav{display:flex;flex-direction:column;gap:2px;flex:1;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;color:#b9c5dd;transition:background .15s,color .15s;user-select:none;}
+  .nav-item:hover{background:var(--navy-hover);color:#fff;}
+  .nav-item.active{background:var(--green);color:#fff;font-weight:600;}
+  .nav-icon{width:18px;text-align:center;}
+  .score-card{margin-top:16px;background:var(--navy-light);border-radius:12px;padding:16px;text-align:center;}
+  .score-card h4{margin:0 0 12px 0;font-size:12px;color:#a9b6d1;font-weight:600;letter-spacing:.02em;}
+  .score-ring{width:96px;height:96px;margin:0 auto 10px auto;position:relative;}
+  .score-ring svg{transform:rotate(-90deg);}
+  .score-ring .pct{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .score-ring .pct b{font-size:20px;color:#fff;}
+  .score-ring .pct span{font-size:10px;color:var(--green);font-weight:700;}
+  .score-meta{font-size:11px;color:#8ea0c2;}
+
+  /* Main */
+  .main{flex:1;min-width:0;padding:26px 30px;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:14px;}
+  .page-title{display:flex;align-items:center;gap:12px;}
+  .title-icon{width:38px;height:38px;border-radius:10px;background:var(--green-soft);color:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .page-title h1{margin:0;font-size:24px;}
+  .page-title p{margin:2px 0 0 0;color:var(--text-muted);font-size:13.5px;}
+  /* Stepper */
+  .stepper{display:flex;align-items:flex-start;gap:0;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;}
+  .step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:88px;cursor:pointer;position:relative;}
+  .step:not(:last-child)::after{content:'';position:absolute;top:16px;left:56%;width:88%;height:2px;background:var(--border);z-index:0;}
+  .step.completed:not(:last-child)::after{background:var(--green);}
+  .step-circle{width:32px;height:32px;border-radius:50%;background:#eef1f6;color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;z-index:1;border:2px solid #eef1f6;}
+  .step.active .step-circle{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .step.completed .step-circle{background:var(--green);border-color:var(--green);color:#fff;}
+  .step-label{font-size:11px;color:var(--text-muted);text-align:center;font-weight:600;}
+  .step.active .step-label{color:var(--navy);}
+  .step.completed .step-label{color:var(--green-dark);}
+
+  /* Org selector in sidebar */
+  .org-switch{margin:0 0 14px 0;padding:0 2px;}
+  .org-switch select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid #223a63;background:var(--navy-light);color:#dfe7f6;font-size:12.5px;}
+  .org-switch select option{color:#111;}
+
+  /* Org profile form */
+  .org-form-card{padding:24px;max-width:820px;}
+  .form-section-label{font-size:12px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:.03em;margin:18px 0 10px 0;}
+  .form-section-label:first-child{margin-top:0;}
+  .org-form-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
+  .active-org-banner{display:flex;align-items:center;gap:10px;background:var(--green-soft);color:var(--green-dark);padding:10px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:18px;}
+
+  .btn{border:none;border-radius:8px;padding:10px 16px;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:var(--green);color:#fff;}
+  .btn-primary:hover{background:var(--green-dark);}
+  .btn-outline{background:#fff;border:1px solid var(--border);color:var(--text);}
+  .btn-outline:hover{background:#f2f4f8;}
+  .btn-sm{padding:6px 10px;font-size:12px;}
+  .btn-danger-icon,.btn-edit-icon{border:none;background:none;cursor:pointer;font-size:15px;padding:4px;border-radius:6px;}
+  .btn-edit-icon{color:var(--green-dark);}
+  .btn-danger-icon{color:var(--red);}
+  .btn-edit-icon:hover,.btn-danger-icon:hover{background:#f0f2f6;}
+
+  .toolbar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+  .search-box{flex:1;min-width:200px;position:relative;}
+  .search-box input{width:100%;padding:10px 14px 10px 34px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;background:#fff;}
+  .search-box .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;}
+  select{padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:13.5px;color:var(--text);}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{background:var(--navy);color:#fff;text-align:left;padding:12px 14px;font-weight:600;white-space:nowrap;}
+  thead th:first-child{border-radius:10px 0 0 0;}
+  thead th:last-child{border-radius:0 10px 0 0;}
+  tbody td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#fafbfd;}
+  .actions-cell{display:flex;gap:4px;white-space:nowrap;}
+  .table-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-size:12.5px;color:var(--text-muted);}
+  .pager{display:flex;gap:6px;}
+  .pager button{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;}
+  .pager button.current{background:var(--green);color:#fff;border-color:var(--green);}
+
+  .empty{padding:40px 20px;text-align:center;color:var(--text-muted);}
+
+  /* Overview cards (dashboard) */
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+  .stat-card .label{font-size:12.5px;color:var(--text-muted);margin-bottom:6px;}
+  .stat-card .value{font-size:26px;font-weight:700;}
+  .stat-card .sub{font-size:12px;color:var(--text-muted);margin-top:4px;}
+
+  .two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+  .panel h3{margin:0 0 14px 0;font-size:15px;}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:12.5px;}
+  .bar-row .bar-label{width:120px;flex-shrink:0;color:var(--text-muted);}
+  .bar-track{flex:1;height:8px;background:#eef1f6;border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;}
+  .bar-val{width:34px;text-align:right;color:var(--text-muted);}
+
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+  .badge-compliant{background:#e7f7ee;color:var(--green-dark);}
+  .badge-partial{background:#fdf3dd;color:#9a6b0a;}
+  .badge-noncompliant{background:#fce9e8;color:#b23129;}
+  .badge-unassessed{background:#eef1f6;color:var(--text-muted);}
+  .badge-priority-high{background:#fce9e8;color:#b23129;}
+  .badge-priority-medium{background:#fdf3dd;color:#9a6b0a;}
+  .badge-priority-low{background:#eef1f6;color:var(--text-muted);}
+  .badge-status-done{background:#e7f7ee;color:var(--green-dark);}
+  .badge-status-progress{background:#e8effc;color:#2a5aa8;}
+  .badge-status-notstarted{background:#eef1f6;color:var(--text-muted);}
+
+  .gap-item{display:flex;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .gap-item:last-child{border-bottom:none;}
+  .gap-item .req{font-size:13.5px;font-weight:600;}
+  .gap-item .cat{font-size:11.5px;color:var(--text-muted);margin-top:2px;}
+  .gap-item .notes{font-size:12px;color:var(--text-muted);margin-top:6px;}
+  .gap-controls{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+  .gap-controls select{font-size:12px;padding:6px 8px;}
+
+  .notes-input{width:100%;margin-top:8px;border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;font-family:inherit;resize:vertical;}
+
+  /* Modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,18,35,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#fff;border-radius:12px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:24px;}
+  .modal h2{margin:0 0 16px 0;font-size:18px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .form-field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+  .form-field.full{grid-column:1/-1;}
+  .form-field label{font-size:12px;font-weight:600;color:var(--text-muted);}
+  .form-field input,.form-field select,.form-field textarea{padding:9px 10px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;}
+  .form-field textarea{resize:vertical;min-height:56px;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px;}
+
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.2);z-index:200;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  .report-block{margin-bottom:22px;}
+  .report-block h4{margin:0 0 10px 0;font-size:13.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;}
+  .action-summary-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .action-summary-row:last-child{border-bottom:none;}
+
+  @media print{
+    .sidebar,.toolbar,.page-header .btn,.actions-cell,.gap-controls,#reportGenBtn{display:none!important;}
+    .main{padding:0;}
+    .app{display:block;}
+  }
+  @media (max-width:760px){
+    .sidebar{display:none;}
+    .main{padding:18px;}
+    table{font-size:12px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div class="brand-text">NDPR<br>Compliance<br>Checklist</div>
+    </div>
+    <div class="org-switch">
+      <select id="orgSwitchSelect" onchange="switchOrganisation(this.value)">
+        <option value="">+ New Organisation</option>
+      </select>
+    </div>
+    <div class="nav">
+      <div class="nav-item active" data-page="orgprofile"><span class="nav-icon">🏢</span> Organisation Profile</div>
+      <div class="nav-item" data-page="dashboard"><span class="nav-icon">🏠</span> Dashboard</div>
+      <div class="nav-item" data-page="datamap"><span class="nav-icon">🗺️</span> Data Map</div>
+      <div class="nav-item" data-page="gaps"><span class="nav-icon">📋</span> Gap Assessment</div>
+      <div class="nav-item" data-page="actions"><span class="nav-icon">✅</span> Action Plan</div>
+      <div class="nav-item" data-page="reports"><span class="nav-icon">📊</span> Reports</div>
+      <div class="nav-item" data-page="submit"><span class="nav-icon">📤</span> Submit Assessment</div>
+      <div class="nav-item" data-page="documents"><span class="nav-icon">📄</span> Documents</div>
+      <div class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span> Settings</div>
+      <div class="nav-item" data-page="help"><span class="nav-icon">❓</span> Help &amp; Support</div>
+    </div>
+    <div class="score-card">
+      <h4>COMPLIANCE SCORE</h4>
+      <div class="score-ring">
+        <svg width="96" height="96" viewBox="0 0 96 96">
+          <circle cx="48" cy="48" r="40" fill="none" stroke="#22345c" stroke-width="9"/>
+          <circle id="scoreArc" cx="48" cy="48" r="40" fill="none" stroke="#17a34a" stroke-width="9" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+        </svg>
+        <div class="pct"><b id="scorePct">0%</b><span id="scoreLabel">—</span></div>
+      </div>
+      <div class="score-meta">Last updated: <span id="scoreDate">—</span></div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- ORGANISATION PROFILE -->
+    <div class="page active" id="page-orgprofile">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">🏢</div>
+          <div><h1>Organisation Profile</h1><p>Enter the organisation details before starting the NDPR compliance assessment.</p></div>
+        </div>
+      </div>
+      <div id="stepper-orgprofile"></div>
+      <div id="activeOrgBanner"></div>
+      <div class="card org-form-card">
+        <input type="hidden" id="orgId">
+        <div class="form-section-label">Organisation Details</div>
+        <div class="form-grid">
+          <div class="form-field full"><label>Organisation Name</label><input id="o_name" placeholder="e.g. Chosen Grace Academy"></div>
+          <div class="form-field"><label>Industry</label>
+            <select id="o_industry">
+              <option value="">Select industry</option>
+              <option>FinTech</option><option>Hospital</option><option>School</option><option>Government</option>
+              <option>Insurance</option><option>E-commerce</option><option>Telecommunications</option>
+              <option>Manufacturing</option><option>NGO</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Registration Number <span style="font-weight:400;">(optional)</span></label><input id="o_reg" placeholder="CAC / RC number"></div>
+          <div class="form-field full"><label>Organisation Address</label><input id="o_address" placeholder="Street, City, State"></div>
+          <div class="form-field"><label>Contact Email</label><input id="o_email" type="email" placeholder="info@organisation.com"></div>
+          <div class="form-field"><label>Contact Phone Number</label><input id="o_phone" placeholder="+234..."></div>
+          <div class="form-field"><label>Number of Employees</label><input id="o_employees" type="number" min="0" placeholder="e.g. 45"></div>
+          <div class="form-field"><label>Assessment Date</label><input id="o_date" type="date"></div>
+        </div>
+        <div class="form-section-label">Data Protection Officer</div>
+        <div class="form-grid">
+          <div class="form-field"><label>DPO Name</label><input id="o_dpoName" placeholder="Full name"></div>
+          <div class="form-field"><label>DPO Email</label><input id="o_dpoEmail" type="email" placeholder="dpo@organisation.com"></div>
+        </div>
+        <div class="org-form-actions">
+          <button class="btn btn-outline" onclick="saveOrganisation(false)">Save Organisation</button>
+          <button class="btn btn-primary" onclick="saveOrganisation(true)">Start Assessment →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page" id="page-dashboard">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">🏠</div>
+          <div><h1>Dashboard</h1><p>Your NDPR compliance posture at a glance.</p></div>
+        </div>
+      </div>
+      <div class="grid-cards">
+        <div class="stat-card"><div class="label">Data Assets Mapped</div><div class="value" id="statAssets">0</div><div class="sub">across all departments</div></div>
+        <div class="stat-card"><div class="label">Requirements Assessed</div><div class="value" id="statAssessed">0 / 0</div><div class="sub">gap assessment items</div></div>
+        <div class="stat-card"><div class="label">Open Gaps</div><div class="value" id="statGaps">0</div><div class="sub">not compliant or partial</div></div>
+        <div class="stat-card"><div class="label">Open Actions</div><div class="value" id="statActions">0</div><div class="sub">remediation tasks in progress</div></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <h3>Compliance by Requirement Category</h3>
+          <div id="dashboardBars"></div>
+        </div>
+        <div class="panel">
+          <h3>Recent Action Items</h3>
+          <div id="dashboardActions"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA MAP -->
+    <div class="page" id="page-datamap">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">🗺️</div>
+          <div><h1 id="datamapTitle">Data Map</h1><p>Identify and document personal data your organization collects, processes, stores and shares.</p></div>
+        </div>
+        <button class="btn btn-primary" onclick="openAssetModal()">+ Add New Data Asset</button>
+      </div>
+      <div id="stepper-datamap"></div>
+      <div class="toolbar">
+        <div class="search-box"><span class="icon">🔍</span><input id="assetSearch" placeholder="Search data assets..." oninput="renderAssets()"></div>
+        <select id="assetDeptFilter" onchange="renderAssets()"><option value="">All Departments</option></select>
+        <select id="assetLocFilter" onchange="renderAssets()"><option value="">All Locations</option></select>
+        <button class="btn btn-outline" onclick="exportAssetsCSV()">⬇ Export</button>
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto;">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Department / Business Unit</th><th>Data Collected</th><th>Source of Data</th>
+            <th>Purpose of Collection</th><th>Storage Location</th><th>Who Has Access</th>
+            <th>Shared With (Third Parties)</th><th>Retention Period</th><th>Disposal Method</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="assetsTbody"></tbody>
+        </table>
+        </div>
+        <div class="table-footer"><span id="assetsCount">Showing 0 entries</span></div>
+      </div>
+    </div>
+
+    <!-- GAP ASSESSMENT -->
+    <div class="page" id="page-gaps">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">📋</div>
+          <div><h1 id="gapsTitle">Gap Assessment</h1><p>Score each NDPR requirement and record supporting evidence.</p></div>
+        </div>
+        <button class="btn btn-outline" onclick="resetGaps()">↺ Reset Checklist</button>
+      </div>
+      <div id="stepper-gaps"></div>
+      <div class="card" style="padding:6px 18px;">
+        <div id="gapsList"></div>
+      </div>
+    </div>
+
+    <!-- ACTION PLAN -->
+    <div class="page" id="page-actions">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">✅</div>
+          <div><h1 id="actionsTitle">Action Plan</h1><p>Remediation tasks generated from gaps, plus anything you add manually.</p></div>
+        </div>
+        <button class="btn btn-primary" onclick="openActionModal()">+ Add Action</button>
+      </div>
+      <div id="stepper-actions"></div>
+      <div class="card">
+        <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Action Item</th><th>Linked Requirement</th><th>Owner</th><th>Due Date</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="actionsTbody"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="page" id="page-reports">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">📊</div>
+          <div><h1 id="reportsTitle">Reports</h1><p>A shareable snapshot of your NDPR compliance status.</p></div>
+        </div>
+        <button class="btn btn-primary" id="reportGenBtn" onclick="window.print()">🖨 Print / Save as PDF</button>
+      </div>
+      <div id="stepper-reports"></div>
+      <div class="card" style="padding:22px;">
+        <div class="report-block">
+          <h4>Overall Compliance Score</h4>
+          <div style="display:flex;align-items:center;gap:18px;">
+            <div style="font-size:40px;font-weight:800;color:var(--green-dark);" id="reportScoreBig">0%</div>
+            <div style="color:var(--text-muted);font-size:13px;" id="reportScoreDesc">No assessment recorded yet.</div>
+          </div>
+        </div>
+        <div class="report-block">
+          <h4>Requirement Status Breakdown</h4>
+          <div id="reportBreakdown"></div>
+        </div>
+        <div class="report-block">
+          <h4>Data Map Summary</h4>
+          <div id="reportDataSummary"></div>
+        </div>
+        <div class="report-block">
+          <h4>Open Action Items</h4>
+          <div id="reportActions"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT ASSESSMENT -->
+    <div class="page" id="page-submit">
+      <div class="page-header">
+        <div class="page-title">
+          <div class="title-icon">📤</div>
+          <div><h1 id="submitTitle">Submit Assessment</h1><p>Review the summary below, then submit to close out this assessment cycle.</p></div>
+        </div>
+      </div>
+      <div id="stepper-submit"></div>
+      <div class="card" style="padding:24px;max-width:640px;">
+        <div id="submitSummary"></div>
+        <div class="org-form-actions">
+          <span id="submitStatusMsg" style="color:var(--text-muted);font-size:13px;align-self:center;"></span>
+          <button class="btn btn-primary" onclick="submitAssessment()">✅ Submit Assessment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="page" id="page-documents">
+      <div class="page-header"><div class="page-title"><div class="title-icon">📄</div><div><h1>Documents</h1><p>Store links to your policy documents and evidence files.</p></div></div>
+        <button class="btn btn-primary" onclick="openDocModal()">+ Add Document</button>
+      </div>
+      <div class="card"><div style="overflow-x:auto;"><table>
+        <thead><tr><th>Document Name</th><th>Category</th><th>Link / Reference</th><th>Last Updated</th><th>Actions</th></tr></thead>
+        <tbody id="docsTbody"></tbody>
+      </table></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="page-header"><div class="page-title"><div class="title-icon">⚙️</div><div><h1>Settings</h1><p>Organisation details now live in the Organisation Profile section.</p></div></div></div>
+      <div class="card" style="padding:20px;max-width:520px;">
+        <p style="color:var(--text-muted);font-size:13.5px;line-height:1.6;margin:0;">
+          Organisation name, DPO contact, and registration details are managed per organisation now —
+          head to <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to add or edit them.
+          Each organisation you create keeps its own Data Map, Gap Assessment, Action Plan, and Documents.
+        </p>
+      </div>
+    </div>
+
+    <!-- HELP -->
+    <div class="page" id="page-help">
+      <div class="page-header"><div class="page-title"><div class="title-icon">❓</div><div><h1>Help &amp; Support</h1><p>How this checklist maps to NDPR / NDPA obligations.</p></div></div></div>
+      <div class="card" style="padding:20px;line-height:1.7;font-size:13.5px;color:var(--text-muted);">
+        <p><strong style="color:var(--text)">Data Map</strong> — record every place personal data enters, lives, and moves to. This is the foundation NDPA/NDPR compliance is built on.</p>
+        <p><strong style="color:var(--text)">Gap Assessment</strong> — score your organization against core NDPR requirements. Anything marked "Not Compliant" or "Partial" needs a plan.</p>
+        <p><strong style="color:var(--text)">Action Plan</strong> — track the remediation work closing each gap, with an owner and a due date.</p>
+        <p><strong style="color:var(--text)">Reports</strong> — a snapshot you can print or save as a PDF for your assessment report and stakeholders.</p>
+        <p style="margin-top:14px;">This tool is an MVP checklist to help you organize evidence — it does not constitute legal advice. For formal compliance sign-off, consult NITDA guidance or a licensed Data Protection Compliance Organisation (DPCO).</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Asset Modal -->
+<div class="modal-overlay" id="assetModal">
+  <div class="modal">
+    <h2 id="assetModalTitle">Add New Data Asset</h2>
+    <input type="hidden" id="assetId">
+    <div class="form-grid">
+      <div class="form-field full"><label>Department / Business Unit</label><input id="f_dept" placeholder="e.g. Customer Service"></div>
+      <div class="form-field full"><label>Data Collected</label><input id="f_data" placeholder="e.g. Name, Phone Number, Email"></div>
+      <div class="form-field"><label>Source of Data</label><input id="f_source" placeholder="e.g. Online forms, Calls"></div>
+      <div class="form-field"><label>Storage Location</label><input id="f_storage" placeholder="e.g. Customer DB (Cloud)"></div>
+      <div class="form-field full"><label>Purpose of Collection</label><textarea id="f_purpose" placeholder="Why is this data collected?"></textarea></div>
+      <div class="form-field"><label>Who Has Access</label><input id="f_access" placeholder="e.g. Support Officers"></div>
+      <div class="form-field"><label>Shared With (Third Parties)</label><input id="f_shared" placeholder="e.g. None"></div>
+      <div class="form-field"><label>Retention Period</label><input id="f_retention" placeholder="e.g. 2 years"></div>
+      <div class="form-field"><label>Disposal Method</label><input id="f_disposal" placeholder="e.g. Secure Deletion"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('assetModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAsset()">Save Asset</button>
+    </div>
+  </div>
+</div>
+
+<!-- Action Modal -->
+<div class="modal-overlay" id="actionModal">
+  <div class="modal">
+    <h2 id="actionModalTitle">Add Action</h2>
+    <input type="hidden" id="actionId">
+    <div class="form-field full"><label>Action Item</label><input id="a_title" placeholder="e.g. Draft and publish privacy policy"></div>
+    <div class="form-field full"><label>Linked Requirement (optional)</label><input id="a_link" placeholder="e.g. Privacy notice"></div>
+    <div class="form-grid">
+      <div class="form-field"><label>Owner</label><input id="a_owner" placeholder="e.g. Neo"></div>
+      <div class="form-field"><label>Due Date</label><input id="a_due" type="date"></div>
+      <div class="form-field"><label>Priority</label>
+        <select id="a_priority"><option>High</option><option>Medium</option><option>Low</option></select>
+      </div>
+      <div class="form-field"><label>Status</label>
+        <select id="a_status"><option>Not Started</option><option>In Progress</option><option>Done</option></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('actionModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAction()">Save Action</button>
+    </div>
+  </div>
+</div>
+
+<!-- Document Modal -->
+<div class="modal-overlay" id="docModal">
+  <div class="modal">
+    <h2>Add Document</h2>
+    <input type="hidden" id="docId">
+    <div class="form-field full"><label>Document Name</label><input id="d_name" placeholder="e.g. Privacy Policy v1"></div>
+    <div class="form-field full"><label>Category</label><input id="d_cat" placeholder="e.g. Policy, Evidence, Agreement"></div>
+    <div class="form-field full"><label>Link / Reference</label><input id="d_link" placeholder="URL or file reference"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('docModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDoc()">Save Document</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- Storage helpers (browser localStorage — persists per-browser after deployment) ---------- */
+const STORAGE_PREFIX = 'ndpr-checklist:';
+async function loadKey(key, fallback){
+  try{
+    const raw = localStorage.getItem(STORAGE_PREFIX + key);
+    return raw !== null ? JSON.parse(raw) : fallback;
+  }catch(e){ console.error('storage read error', e); return fallback; }
+}
+async function saveKey(key, value){
+  try{ localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value)); }
+  catch(e){ console.error('storage write error', e); toast('Could not save — storage may be full or blocked'); }
+}
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ---------- Default seed data ---------- */
+const SEED_ASSETS = [
+  {id:1, dept:"Customer Service", data:"Name, Phone Number, Email, Address", source:"Customers (Online forms, Calls, Walk-ins)", purpose:"To provide support and respond to inquiries", storage:"Customer DB (Cloud)", access:"CS Team Lead, Support Officers", shared:"None", retention:"2 years", disposal:"Secure Deletion"},
+  {id:2, dept:"Marketing", data:"Email, Name, Interests", source:"Website sign-up, Campaigns", purpose:"To send newsletters and promotional materials", storage:"Marketing DB (Cloud)", access:"Marketing Manager", shared:"Email Service Provider", retention:"3 years", disposal:"Anonymization"},
+  {id:3, dept:"Human Resources", data:"Name, BVN, Address, Salary Info, Bank Details", source:"Employees (Onboarding Forms)", purpose:"To manage employment and payroll", storage:"HR DB (Local Server)", access:"HR Manager, Finance Manager", shared:"Payroll Provider, Pension Provider", retention:"7 years", disposal:"Secure Deletion"},
+  {id:4, dept:"IT Department", data:"IP Address, Device Info, Log Data", source:"System usage, Network logs", purpose:"To ensure system security and performance", storage:"Log Server (On-premise)", access:"IT Admins, Security Team", shared:"None", retention:"1 year", disposal:"Automatic Deletion"},
+  {id:5, dept:"Sales", data:"Name, Company, Email, Phone, Product Interest", source:"Leads, Business Meetings", purpose:"To follow up and close sales", storage:"Sales DB (Cloud)", access:"Sales Manager, Sales Officers", shared:"CRM Provider", retention:"5 years", disposal:"Secure Deletion"}
+];
+
+const GAP_REQUIREMENTS = [
+  {id:1, cat:"Data Protection Officer (DPO) Appointment", req:"A Data Protection Officer (DPO) has been appointed and registered with NITDA where required"},
+  {id:2, cat:"Data Inventory and Mapping", req:"A complete, up-to-date inventory/map of all personal data processing activities is maintained"},
+  {id:3, cat:"Legal Basis for Processing", req:"A documented lawful basis exists for every category of personal data processed"},
+  {id:4, cat:"Privacy Policy and Notices", req:"A privacy policy / notice is published, accessible, and kept current for data subjects"},
+  {id:5, cat:"Data Subject Rights", req:"A process exists for handling access, rectification, erasure, and portability requests"},
+  {id:6, cat:"Data Breach Management", req:"A data breach response plan exists, including NITDA notification within 72 hours"},
+  {id:7, cat:"Training and Awareness", req:"Staff have received data protection awareness training appropriate to their role"},
+  {id:8, cat:"Data Transfer Controls", req:"Safeguards (e.g. adequacy assessment, contractual clauses) govern any cross-border data transfer"},
+  {id:9, cat:"Record Keeping and Documentation", req:"Records of processing activities (ROPA) and supporting documentation are maintained"},
+  {id:10, cat:"Compliance Monitoring and Audits", req:"Periodic internal compliance reviews and the annual NDPR audit filing are carried out"}
+];
+
+let assets = [], gaps = [], actions = [], docs = [], settings = {};
+let organisations = [], activeOrgId = null, submissions = {};
+
+/* ---------- Init ---------- */
+function orgKey(base){ return `org:${activeOrgId}:${base}`; }
+async function loadOrgWorkspace(orgId){
+  if(!orgId){
+    assets = []; gaps = []; actions = []; docs = [];
+    return;
+  }
+  const savedAssets = await loadKey(`org:${orgId}:assets`, null);
+  assets = savedAssets !== null ? savedAssets : JSON.parse(JSON.stringify(SEED_ASSETS));
+  if(savedAssets === null) await saveKey(`org:${orgId}:assets`, assets);
+
+  const savedGaps = await loadKey(`org:${orgId}:gaps`, null);
+  gaps = savedGaps !== null ? savedGaps : GAP_REQUIREMENTS.map(g=>({...g, status:'Not Assessed', notes:''}));
+  if(savedGaps === null) await saveKey(`org:${orgId}:gaps`, gaps);
+
+  actions = await loadKey(`org:${orgId}:actions`, []);
+  docs = await loadKey(`org:${orgId}:docs`, []);
+}
+async function init(){
+  settings = await loadKey('settings', {});
+  organisations = await loadKey('organisations', []);
+  activeOrgId = await loadKey('activeOrgId', null);
+  submissions = await loadKey('submissions', {});
+  await loadOrgWorkspace(activeOrgId);
+
+  renderAssets();
+  renderGaps();
+  renderActions();
+  renderDocs();
+  renderDashboard();
+  renderReports();
+  updateScoreWidget();
+  refreshOrgSwitcher();
+  loadActiveOrgIntoForm();
+  refreshOrgTitles();
+  renderAllSteppers();
+}
+
+/* ---------- Organisation Profile ---------- */
+function refreshOrgSwitcher(){
+  const sel = document.getElementById('orgSwitchSelect');
+  sel.innerHTML = '<option value="">+ New Organisation</option>' +
+    organisations.map(o=>`<option value="${o.id}" ${String(o.id)===String(activeOrgId)?'selected':''}>${escapeHtml(o.name)}</option>`).join('');
+}
+function getActiveOrg(){
+  return organisations.find(o=>String(o.id)===String(activeOrgId)) || null;
+}
+function loadActiveOrgIntoForm(){
+  const org = getActiveOrg();
+  const ids = ['o_name','o_industry','o_reg','o_address','o_email','o_phone','o_employees','o_dpoName','o_dpoEmail','o_date'];
+  if(!org){
+    document.getElementById('orgId').value = '';
+    ids.forEach(id=>document.getElementById(id).value='');
+    document.getElementById('activeOrgBanner').innerHTML = '';
+    return;
+  }
+  document.getElementById('orgId').value = org.id;
+  document.getElementById('o_name').value = org.name||'';
+  document.getElementById('o_industry').value = org.industry||'';
+  document.getElementById('o_reg').value = org.reg||'';
+  document.getElementById('o_address').value = org.address||'';
+  document.getElementById('o_email').value = org.email||'';
+  document.getElementById('o_phone').value = org.phone||'';
+  document.getElementById('o_employees').value = org.employees||'';
+  document.getElementById('o_dpoName').value = org.dpoName||'';
+  document.getElementById('o_dpoEmail').value = org.dpoEmail||'';
+  document.getElementById('o_date').value = org.date||'';
+  document.getElementById('activeOrgBanner').innerHTML = `<div class="active-org-banner">🏢 Currently assessing: <strong>${escapeHtml(org.name)}</strong></div>`;
+}
+async function switchOrganisation(id){
+  activeOrgId = id || null;
+  await saveKey('activeOrgId', activeOrgId);
+  await loadOrgWorkspace(activeOrgId);
+  loadActiveOrgIntoForm();
+  refreshOrgTitles();
+  renderAssets(); renderGaps(); renderActions(); renderDocs();
+  renderDashboard(); renderReports(); updateScoreWidget(); renderSubmitSummary();
+}
+async function saveOrganisation(startAssessment){
+  const name = document.getElementById('o_name').value.trim();
+  if(!name){ toast('Organisation name is required'); return; }
+  const idVal = document.getElementById('orgId').value;
+  const record = {
+    id: idVal ? idVal : String(Date.now()),
+    name,
+    industry: document.getElementById('o_industry').value,
+    reg: document.getElementById('o_reg').value.trim(),
+    address: document.getElementById('o_address').value.trim(),
+    email: document.getElementById('o_email').value.trim(),
+    phone: document.getElementById('o_phone').value.trim(),
+    employees: document.getElementById('o_employees').value,
+    dpoName: document.getElementById('o_dpoName').value.trim(),
+    dpoEmail: document.getElementById('o_dpoEmail').value.trim(),
+    date: document.getElementById('o_date').value
+  };
+  if(idVal) organisations = organisations.map(o=>String(o.id)===String(idVal)?record:o);
+  else organisations.push(record);
+  await saveKey('organisations', organisations);
+  const orgChanged = String(activeOrgId) !== String(record.id);
+  activeOrgId = record.id;
+  await saveKey('activeOrgId', activeOrgId);
+  if(orgChanged || !idVal){
+    await loadOrgWorkspace(activeOrgId);
+    renderAssets(); renderGaps(); renderActions(); renderDocs();
+    renderDashboard(); renderReports(); updateScoreWidget();
+  }
+  refreshOrgSwitcher();
+  loadActiveOrgIntoForm();
+  refreshOrgTitles();
+  toast('Organisation saved');
+  if(startAssessment) goToPage('datamap');
+}
+function refreshOrgTitles(){
+  const org = getActiveOrg();
+  const suffix = org ? ` – ${escapeHtml(org.name)}` : '';
+  ['datamapTitle','gapsTitle','actionsTitle','reportsTitle','submitTitle'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    const base = {datamapTitle:'Data Map',gapsTitle:'Gap Assessment',actionsTitle:'Action Plan',reportsTitle:'Reports',submitTitle:'Submit Assessment'}[id];
+    el.textContent = base + suffix;
+  });
+}
+function renderSubmitSummary(){
+  const container = document.getElementById('submitSummary');
+  if(!container) return;
+  const org = getActiveOrg();
+  const score = computeScore();
+  const openGaps = gaps.filter(g=>g.status==='Not Compliant'||g.status==='Partial').length;
+  const openActions = actions.filter(a=>a.status!=='Done').length;
+  const sub = org ? submissions[org.id] : null;
+  container.innerHTML = `
+    <div class="action-summary-row"><span>Organisation</span><span>${org?escapeHtml(org.name):'No organisation selected'}</span></div>
+    <div class="action-summary-row"><span>Compliance score</span><span>${score}%</span></div>
+    <div class="action-summary-row"><span>Open gaps</span><span>${openGaps}</span></div>
+    <div class="action-summary-row"><span>Open action items</span><span>${openActions}</span></div>
+    <div class="action-summary-row"><span>Data assets mapped</span><span>${assets.length}</span></div>
+  `;
+  document.getElementById('submitStatusMsg').textContent = sub ? `Submitted on ${sub.date}` : '';
+}
+async function submitAssessment(){
+  const org = getActiveOrg();
+  if(!org){ toast('Select or create an organisation first'); return; }
+  submissions[org.id] = {date: new Date().toLocaleString(), score: computeScore()};
+  await saveKey('submissions', submissions);
+  renderSubmitSummary();
+  toast('Assessment submitted for '+org.name);
+}
+
+/* ---------- Navigation ---------- */
+function goToPage(slug){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===slug));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+slug).classList.add('active');
+  if(slug==='dashboard') renderDashboard();
+  if(slug==='reports') renderReports();
+  if(slug==='submit') renderSubmitSummary();
+  if(STEPS.some(s=>s.slug===slug)) renderAllSteppers();
+  refreshOrgTitles();
+}
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', ()=> goToPage(item.dataset.page));
+});
+
+/* ---------- Assessment stepper ---------- */
+const STEPS = [
+  {slug:'orgprofile', label:'Organisation Profile'},
+  {slug:'datamap', label:'Data Map'},
+  {slug:'gaps', label:'Gap Assessment'},
+  {slug:'actions', label:'Action Plan'},
+  {slug:'reports', label:'Reports'},
+  {slug:'submit', label:'Submit Assessment'}
+];
+function renderAllSteppers(){
+  const currentSlug = document.querySelector('.page.active')?.id.replace('page-','');
+  const currentIdx = STEPS.findIndex(s=>s.slug===currentSlug);
+  STEPS.forEach((s,i)=>{
+    const container = document.getElementById('stepper-'+s.slug);
+    if(!container) return;
+    container.innerHTML = `<div class="stepper">${STEPS.map((st,j)=>`
+      <div class="step ${j===currentIdx?'active':j<currentIdx?'completed':''}" onclick="goToPage('${st.slug}')">
+        <div class="step-circle">${j<currentIdx?'✓':j+1}</div>
+        <div class="step-label">${st.label}</div>
+      </div>`).join('')}</div>`;
+  });
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+/* ---------- DATA MAP ---------- */
+function refreshFilters(){
+  const depts = [...new Set(assets.map(a=>a.dept))];
+  const locs = [...new Set(assets.map(a=>a.storage))];
+  const dSel = document.getElementById('assetDeptFilter');
+  const lSel = document.getElementById('assetLocFilter');
+  const curD = dSel.value, curL = lSel.value;
+  dSel.innerHTML = '<option value="">All Departments</option>' + depts.map(d=>`<option ${d===curD?'selected':''}>${escapeHtml(d)}</option>`).join('');
+  lSel.innerHTML = '<option value="">All Locations</option>' + locs.map(l=>`<option ${l===curL?'selected':''}>${escapeHtml(l)}</option>`).join('');
+}
+
+function renderAssets(){
+  refreshFilters();
+  const q = document.getElementById('assetSearch').value.toLowerCase();
+  const dept = document.getElementById('assetDeptFilter').value;
+  const loc = document.getElementById('assetLocFilter').value;
+  let filtered = assets.filter(a=>{
+    const matchesQ = !q || Object.values(a).join(' ').toLowerCase().includes(q);
+    const matchesD = !dept || a.dept===dept;
+    const matchesL = !loc || a.storage===loc;
+    return matchesQ && matchesD && matchesL;
+  });
+  const tbody = document.getElementById('assetsTbody');
+  if(!activeOrgId){
+    tbody.innerHTML = `<tr><td colspan="11"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to start mapping data.</div></td></tr>`;
+    document.getElementById('assetsCount').textContent = 'No organisation selected';
+    return;
+  }
+  if(filtered.length===0){
+    tbody.innerHTML = `<tr><td colspan="11"><div class="empty">No data assets found. Try adjusting your search or filters.</div></td></tr>`;
+  } else {
+    tbody.innerHTML = filtered.map((a,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td><strong>${escapeHtml(a.dept)}</strong></td>
+        <td>${escapeHtml(a.data)}</td>
+        <td>${escapeHtml(a.source)}</td>
+        <td>${escapeHtml(a.purpose)}</td>
+        <td>${escapeHtml(a.storage)}</td>
+        <td>${escapeHtml(a.access)}</td>
+        <td>${escapeHtml(a.shared)||'None'}</td>
+        <td>${escapeHtml(a.retention)}</td>
+        <td>${escapeHtml(a.disposal)}</td>
+        <td class="actions-cell">
+          <button class="btn-edit-icon" onclick="editAsset(${a.id})">✏️</button>
+          <button class="btn-danger-icon" onclick="deleteAsset(${a.id})">🗑️</button>
+        </td>
+      </tr>`).join('');
+  }
+  document.getElementById('assetsCount').textContent = `Showing ${filtered.length} of ${assets.length} entries`;
+}
+
+function openAssetModal(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  document.getElementById('assetModalTitle').textContent = 'Add New Data Asset';
+  ['assetId','f_dept','f_data','f_source','f_purpose','f_storage','f_access','f_shared','f_retention','f_disposal'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('assetModal').classList.add('open');
+}
+function editAsset(id){
+  const a = assets.find(x=>x.id===id);
+  if(!a) return;
+  document.getElementById('assetModalTitle').textContent = 'Edit Data Asset';
+  document.getElementById('assetId').value = a.id;
+  document.getElementById('f_dept').value = a.dept;
+  document.getElementById('f_data').value = a.data;
+  document.getElementById('f_source').value = a.source;
+  document.getElementById('f_purpose').value = a.purpose;
+  document.getElementById('f_storage').value = a.storage;
+  document.getElementById('f_access').value = a.access;
+  document.getElementById('f_shared').value = a.shared;
+  document.getElementById('f_retention').value = a.retention;
+  document.getElementById('f_disposal').value = a.disposal;
+  document.getElementById('assetModal').classList.add('open');
+}
+async function saveAsset(){
+  const dept = document.getElementById('f_dept').value.trim();
+  if(!dept){ toast('Department is required'); return; }
+  const idVal = document.getElementById('assetId').value;
+  const record = {
+    id: idVal ? Number(idVal) : Date.now(),
+    dept, data: document.getElementById('f_data').value.trim(),
+    source: document.getElementById('f_source').value.trim(),
+    purpose: document.getElementById('f_purpose').value.trim(),
+    storage: document.getElementById('f_storage').value.trim(),
+    access: document.getElementById('f_access').value.trim(),
+    shared: document.getElementById('f_shared').value.trim(),
+    retention: document.getElementById('f_retention').value.trim(),
+    disposal: document.getElementById('f_disposal').value.trim()
+  };
+  if(idVal){
+    assets = assets.map(a=>a.id===record.id ? record : a);
+  } else {
+    assets.push(record);
+  }
+  await saveKey(orgKey('assets'), assets);
+  closeModal('assetModal');
+  renderAssets(); renderDashboard(); renderReports();
+  toast('Data asset saved');
+}
+async function deleteAsset(id){
+  if(!confirm('Delete this data asset?')) return;
+  assets = assets.filter(a=>a.id!==id);
+  await saveKey(orgKey('assets'), assets);
+  renderAssets(); renderDashboard(); renderReports();
+  toast('Data asset deleted');
+}
+function exportAssetsCSV(){
+  const headers = ["Department","Data Collected","Source of Data","Purpose","Storage Location","Who Has Access","Shared With","Retention Period","Disposal Method"];
+  const rows = assets.map(a=>[a.dept,a.data,a.source,a.purpose,a.storage,a.access,a.shared,a.retention,a.disposal]);
+  const csv = [headers, ...rows].map(r=>r.map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='data-map.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ---------- GAP ASSESSMENT ---------- */
+function renderGaps(){
+  const list = document.getElementById('gapsList');
+  if(!activeOrgId){
+    list.innerHTML = `<div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to start the checklist.</div>`;
+    return;
+  }
+  list.innerHTML = gaps.map(g=>`
+    <div class="gap-item">
+      <div style="flex:1;">
+        <div class="cat">${escapeHtml(g.cat)}</div>
+        <div class="req">${escapeHtml(g.req)}</div>
+        <textarea class="notes-input" placeholder="Evidence / notes..." onblur="updateGapNotes(${g.id}, this.value)">${escapeHtml(g.notes||'')}</textarea>
+      </div>
+      <div class="gap-controls">
+        ${statusBadge(g.status)}
+        <select onchange="updateGapStatus(${g.id}, this.value)">
+          ${['Not Assessed','Compliant','Partial','Not Compliant'].map(s=>`<option ${s===g.status?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  `).join('');
+}
+function statusBadge(status){
+  const map = {'Compliant':'badge-compliant','Partial':'badge-partial','Not Compliant':'badge-noncompliant','Not Assessed':'badge-unassessed'};
+  return `<span class="badge ${map[status]}">${status}</span>`;
+}
+async function updateGapStatus(id, status){
+  const g = gaps.find(x=>x.id===id);
+  const prevStatus = g.status;
+  g.status = status;
+  await saveKey(orgKey('gaps'), gaps);
+  renderGaps(); renderDashboard(); renderReports(); updateScoreWidget();
+  // auto-suggest an action when a requirement becomes non-compliant/partial and no linked action exists
+  if((status==='Not Compliant' || status==='Partial') && prevStatus!==status){
+    const exists = actions.some(a=>a.link===g.req);
+    if(!exists){
+      actions.push({id:Date.now(), title:`Remediate: ${g.req}`, link:g.req, owner:'', due:'', priority: status==='Not Compliant'?'High':'Medium', status:'Not Started'});
+      await saveKey(orgKey('actions'), actions);
+      renderActions();
+      toast('Action item suggested in Action Plan');
+    }
+  }
+}
+async function updateGapNotes(id, notes){
+  const g = gaps.find(x=>x.id===id);
+  g.notes = notes;
+  await saveKey(orgKey('gaps'), gaps);
+}
+async function resetGaps(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); return; }
+  if(!confirm('Reset the entire checklist to "Not Assessed"? Notes will be kept.')) return;
+  gaps = gaps.map(g=>({...g, status:'Not Assessed'}));
+  await saveKey(orgKey('gaps'), gaps);
+  renderGaps(); renderDashboard(); renderReports(); updateScoreWidget();
+}
+
+function computeScore(){
+  if(gaps.length===0) return 0;
+  const pts = gaps.reduce((sum,g)=>{
+    if(g.status==='Compliant') return sum+1;
+    if(g.status==='Partial') return sum+0.5;
+    return sum;
+  },0);
+  return Math.round((pts/gaps.length)*100);
+}
+function updateScoreWidget(){
+  const score = computeScore();
+  document.getElementById('scorePct').textContent = score+'%';
+  const label = score>=80?'Good':score>=50?'Fair':'Needs Work';
+  document.getElementById('scoreLabel').textContent = label;
+  const circumference = 251;
+  document.getElementById('scoreArc').setAttribute('stroke-dashoffset', circumference - (circumference*score/100));
+  document.getElementById('scoreDate').textContent = new Date().toLocaleDateString();
+}
+
+/* ---------- ACTION PLAN ---------- */
+function renderActions(){
+  const tbody = document.getElementById('actionsTbody');
+  if(!activeOrgId){
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to see action items.</div></td></tr>`;
+    return;
+  }
+  if(actions.length===0){
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">No action items yet. Gaps you mark as Partial or Not Compliant will suggest actions automatically.</div></td></tr>`;
+    return;
+  }
+  const statusClass = {'Not Started':'badge-status-notstarted','In Progress':'badge-status-progress','Done':'badge-status-done'};
+  const prioClass = {'High':'badge-priority-high','Medium':'badge-priority-medium','Low':'badge-priority-low'};
+  tbody.innerHTML = actions.map(a=>`
+    <tr>
+      <td><strong>${escapeHtml(a.title)}</strong></td>
+      <td>${escapeHtml(a.link||'—')}</td>
+      <td>${escapeHtml(a.owner||'—')}</td>
+      <td>${a.due||'—'}</td>
+      <td><span class="badge ${prioClass[a.priority]||'badge-priority-low'}">${a.priority}</span></td>
+      <td><span class="badge ${statusClass[a.status]||'badge-status-notstarted'}">${a.status}</span></td>
+      <td class="actions-cell">
+        <button class="btn-edit-icon" onclick="editAction(${a.id})">✏️</button>
+        <button class="btn-danger-icon" onclick="deleteAction(${a.id})">🗑️</button>
+      </td>
+    </tr>
+  `).join('');
+}
+function openActionModal(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  document.getElementById('actionModalTitle').textContent = 'Add Action';
+  ['actionId','a_title','a_link','a_owner','a_due'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a_priority').value='Medium';
+  document.getElementById('a_status').value='Not Started';
+  document.getElementById('actionModal').classList.add('open');
+}
+function editAction(id){
+  const a = actions.find(x=>x.id===id);
+  if(!a) return;
+  document.getElementById('actionModalTitle').textContent = 'Edit Action';
+  document.getElementById('actionId').value = a.id;
+  document.getElementById('a_title').value = a.title;
+  document.getElementById('a_link').value = a.link||'';
+  document.getElementById('a_owner').value = a.owner||'';
+  document.getElementById('a_due').value = a.due||'';
+  document.getElementById('a_priority').value = a.priority;
+  document.getElementById('a_status').value = a.status;
+  document.getElementById('actionModal').classList.add('open');
+}
+async function saveAction(){
+  const title = document.getElementById('a_title').value.trim();
+  if(!title){ toast('Action item is required'); return; }
+  const idVal = document.getElementById('actionId').value;
+  const record = {
+    id: idVal ? Number(idVal) : Date.now(),
+    title, link: document.getElementById('a_link').value.trim(),
+    owner: document.getElementById('a_owner').value.trim(),
+    due: document.getElementById('a_due').value,
+    priority: document.getElementById('a_priority').value,
+    status: document.getElementById('a_status').value
+  };
+  if(idVal) actions = actions.map(a=>a.id===record.id?record:a);
+  else actions.push(record);
+  await saveKey(orgKey('actions'), actions);
+  closeModal('actionModal');
+  renderActions(); renderDashboard(); renderReports();
+  toast('Action saved');
+}
+async function deleteAction(id){
+  if(!confirm('Delete this action item?')) return;
+  actions = actions.filter(a=>a.id!==id);
+  await saveKey(orgKey('actions'), actions);
+  renderActions(); renderDashboard(); renderReports();
+  toast('Action deleted');
+}
+
+/* ---------- DOCUMENTS ---------- */
+function renderDocs(){
+  const tbody = document.getElementById('docsTbody');
+  if(!activeOrgId){
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to add documents.</div></td></tr>`;
+    return;
+  }
+  if(docs.length===0){
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">No documents added yet.</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = docs.map(d=>`
+    <tr>
+      <td><strong>${escapeHtml(d.name)}</strong></td>
+      <td>${escapeHtml(d.cat)}</td>
+      <td>${escapeHtml(d.link)}</td>
+      <td>${d.updated}</td>
+      <td class="actions-cell"><button class="btn-danger-icon" onclick="deleteDoc(${d.id})">🗑️</button></td>
+    </tr>`).join('');
+}
+function openDocModal(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  ['docId','d_name','d_cat','d_link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('docModal').classList.add('open');
+}
+async function saveDoc(){
+  const name = document.getElementById('d_name').value.trim();
+  if(!name){ toast('Document name is required'); return; }
+  docs.push({id:Date.now(), name, cat:document.getElementById('d_cat').value.trim(), link:document.getElementById('d_link').value.trim(), updated:new Date().toLocaleDateString()});
+  await saveKey(orgKey('docs'), docs);
+  closeModal('docModal');
+  renderDocs();
+  toast('Document added');
+}
+async function deleteDoc(id){
+  docs = docs.filter(d=>d.id!==id);
+  await saveKey(orgKey('docs'), docs);
+  renderDocs();
+}
+
+/* ---------- SETTINGS ---------- */
+/* Settings page is now informational only — organisation data lives in Organisation Profile */
+
+/* ---------- DASHBOARD ---------- */
+function renderDashboard(){
+  document.getElementById('statAssets').textContent = assets.length;
+  const assessed = gaps.filter(g=>g.status!=='Not Assessed').length;
+  document.getElementById('statAssessed').textContent = `${assessed} / ${gaps.length}`;
+  const openGaps = gaps.filter(g=>g.status==='Not Compliant'||g.status==='Partial').length;
+  document.getElementById('statGaps').textContent = openGaps;
+  const openActions = actions.filter(a=>a.status!=='Done').length;
+  document.getElementById('statActions').textContent = openActions;
+
+  const cats = [...new Set(gaps.map(g=>g.cat))];
+  const barsHtml = cats.map(cat=>{
+    const items = gaps.filter(g=>g.cat===cat);
+    const pts = items.reduce((s,g)=> s + (g.status==='Compliant'?1:g.status==='Partial'?0.5:0), 0);
+    const pct = Math.round((pts/items.length)*100);
+    const color = pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    return `<div class="bar-row"><div class="bar-label">${escapeHtml(cat)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color};"></div></div><div class="bar-val">${pct}%</div></div>`;
+  }).join('');
+  document.getElementById('dashboardBars').innerHTML = barsHtml || '<div class="empty">No categories yet.</div>';
+
+  const recent = actions.filter(a=>a.status!=='Done').slice(-5).reverse();
+  document.getElementById('dashboardActions').innerHTML = recent.length ? recent.map(a=>`
+    <div class="action-summary-row"><span>${escapeHtml(a.title)}</span><span class="badge ${a.priority==='High'?'badge-priority-high':a.priority==='Medium'?'badge-priority-medium':'badge-priority-low'}">${a.priority}</span></div>
+  `).join('') : '<div class="empty">No open action items 🎉</div>';
+}
+
+/* ---------- REPORTS ---------- */
+function renderReports(){
+  const score = computeScore();
+  document.getElementById('reportScoreBig').textContent = score+'%';
+  document.getElementById('reportScoreDesc').textContent = `Based on ${gaps.length} NDPR requirements assessed on ${new Date().toLocaleDateString()}.`;
+
+  const counts = {'Compliant':0,'Partial':0,'Not Compliant':0,'Not Assessed':0};
+  gaps.forEach(g=>counts[g.status]++);
+  document.getElementById('reportBreakdown').innerHTML = Object.entries(counts).map(([k,v])=>`
+    <div class="action-summary-row"><span>${statusBadge(k)} ${k}</span><span>${v} of ${gaps.length}</span></div>
+  `).join('');
+
+  document.getElementById('reportDataSummary').innerHTML = `
+    <div class="action-summary-row"><span>Total data assets mapped</span><span>${assets.length}</span></div>
+    <div class="action-summary-row"><span>Departments involved</span><span>${[...new Set(assets.map(a=>a.dept))].length}</span></div>
+    <div class="action-summary-row"><span>Assets shared with third parties</span><span>${assets.filter(a=>a.shared && a.shared.toLowerCase()!=='none').length}</span></div>
+  `;
+
+  const openActions = actions.filter(a=>a.status!=='Done');
+  document.getElementById('reportActions').innerHTML = openActions.length ? openActions.map(a=>`
+    <div class="action-summary-row"><span>${escapeHtml(a.title)} ${a.owner?'— '+escapeHtml(a.owner):''}</span><span>${a.due||'No due date'}</span></div>
+  `).join('') : '<div class="empty">No open action items.</div>';
+}
+
+/* ---------- utils ---------- */
+function escapeHtml(str){
+  if(str===undefined||str===null) return '';
+  return String(str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+}
+
+init();
+</script>
+</body>
+</html>

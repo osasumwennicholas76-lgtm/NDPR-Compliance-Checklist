@@ -31,12 +31,12 @@
   /* Sidebar */
   .sidebar{width:230px;background:var(--navy);color:#cfd9ec;flex-shrink:0;display:flex;flex-direction:column;padding:22px 14px;}
   .brand{display:flex;align-items:center;gap:10px;padding:4px 10px 22px 10px;color:#fff;}
-  .brand-icon{width:34px;height:34px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .brand-icon{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
   .brand-text{font-weight:700;font-size:15px;line-height:1.25;}
   .nav{display:flex;flex-direction:column;gap:2px;flex:1;}
   .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;color:#b9c5dd;transition:background .15s,color .15s;user-select:none;}
   .nav-item:hover{background:var(--navy-hover);color:#fff;}
-  .nav-item.active{background:var(--blue);color:#fff;font-weight:600;}
+  .nav-item.active{background:var(--green);color:#fff;font-weight:600;}
   .nav-icon{width:18px;text-align:center;}
   .score-card{margin-top:16px;background:var(--navy-light);border-radius:12px;padding:16px;text-align:center;}
   .score-card h4{margin:0 0 12px 0;font-size:12px;color:#a9b6d1;font-weight:600;letter-spacing:.02em;}
@@ -44,7 +44,7 @@
   .score-ring svg{transform:rotate(-90deg);}
   .score-ring .pct{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
   .score-ring .pct b{font-size:20px;color:#fff;}
-  .score-ring .pct span{font-size:10px;color:var(--blue);font-weight:700;}
+  .score-ring .pct span{font-size:10px;color:var(--green);font-weight:700;}
   .score-meta{font-size:11px;color:#8ea0c2;}
 
   /* Main */
@@ -53,20 +53,20 @@
   .page.active{display:block;}
   .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:14px;}
   .page-title{display:flex;align-items:center;gap:12px;}
-  .title-icon{width:38px;height:38px;border-radius:10px;background:var(--blue-soft);color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .title-icon{width:38px;height:38px;border-radius:10px;background:var(--green-soft);color:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:18px;}
   .page-title h1{margin:0;font-size:24px;}
   .page-title p{margin:2px 0 0 0;color:var(--text-muted);font-size:13.5px;}
   /* Stepper */
   .stepper{display:flex;align-items:flex-start;gap:0;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;}
   .step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:88px;cursor:pointer;position:relative;}
   .step:not(:last-child)::after{content:'';position:absolute;top:16px;left:56%;width:88%;height:2px;background:var(--border);z-index:0;}
-  .step.completed:not(:last-child)::after{background:var(--blue);}
+  .step.completed:not(:last-child)::after{background:var(--green);}
   .step-circle{width:32px;height:32px;border-radius:50%;background:#eef1f6;color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;z-index:1;border:2px solid #eef1f6;}
   .step.active .step-circle{background:var(--navy);border-color:var(--navy);color:#fff;}
-  .step.completed .step-circle{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .step.completed .step-circle{background:var(--green);border-color:var(--green);color:#fff;}
   .step-label{font-size:11px;color:var(--text-muted);text-align:center;font-weight:600;}
   .step.active .step-label{color:var(--navy);}
-  .step.completed .step-label{color:var(--blue-dark);}
+  .step.completed .step-label{color:var(--green-dark);}
 
   /* Org selector in sidebar */
   .org-switch{margin:0 0 14px 0;padding:0 2px;}
@@ -75,19 +75,19 @@
 
   /* Org profile form */
   .org-form-card{padding:24px;max-width:820px;}
-  .form-section-label{font-size:12px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.03em;margin:18px 0 10px 0;}
+  .form-section-label{font-size:12px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:.03em;margin:18px 0 10px 0;}
   .form-section-label:first-child{margin-top:0;}
   .org-form-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
-  .active-org-banner{display:flex;align-items:center;gap:10px;background:var(--blue-soft);color:var(--blue-dark);padding:10px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:18px;}
+  .active-org-banner{display:flex;align-items:center;gap:10px;background:var(--green-soft);color:var(--green-dark);padding:10px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:18px;}
 
   .btn{border:none;border-radius:8px;padding:10px 16px;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
-  .btn-primary{background:var(--blue);color:#fff;}
-  .btn-primary:hover{background:var(--blue-dark);}
+  .btn-primary{background:var(--green);color:#fff;}
+  .btn-primary:hover{background:var(--green-dark);}
   .btn-outline{background:#fff;border:1px solid var(--border);color:var(--text);}
   .btn-outline:hover{background:#f2f4f8;}
   .btn-sm{padding:6px 10px;font-size:12px;}
   .btn-danger-icon,.btn-edit-icon{border:none;background:none;cursor:pointer;font-size:15px;padding:4px;border-radius:6px;}
-  .btn-edit-icon{color:var(--blue-dark);}
+  .btn-edit-icon{color:var(--green-dark);}
   .btn-danger-icon{color:var(--red);}
   .btn-edit-icon:hover,.btn-danger-icon:hover{background:#f0f2f6;}
 
@@ -109,7 +109,7 @@
   .table-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;font-size:12.5px;color:var(--text-muted);}
   .pager{display:flex;gap:6px;}
   .pager button{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;}
-  .pager button.current{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .pager button.current{background:var(--green);color:#fff;border-color:var(--green);}
 
   .empty{padding:40px 20px;text-align:center;color:var(--text-muted);}
 
@@ -119,6 +119,13 @@
   .stat-card .label{font-size:12.5px;color:var(--text-muted);margin-bottom:6px;}
   .stat-card .value{font-size:26px;font-weight:700;}
   .stat-card .sub{font-size:12px;color:var(--text-muted);margin-top:4px;}
+  .stat-card.icon-card{display:flex;align-items:flex-start;gap:14px;}
+  .stat-card .stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .stat-icon.icon-blue{background:var(--green-soft);color:var(--green-dark);}
+  .stat-icon.icon-amber{background:#fdf3dd;color:#9a6b0a;}
+  .stat-icon.icon-green{background:#e7f7ee;color:var(--green-dark);}
+  .stat-icon.icon-red{background:#fce9e8;color:var(--red);}
+  .stat-icon.icon-purple{background:#efe9fb;color:#6b3fc9;}
 
   .two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;}
   @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
@@ -171,11 +178,28 @@
 
   .report-block{margin-bottom:22px;}
   .report-block h4{margin:0 0 10px 0;font-size:13.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;}
+  .reports-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:10px;}
+  .report-tab{border:none;background:none;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;}
+  .report-tab.active{background:var(--green);color:#fff;}
+  .report-tab:not(.active):hover{background:#f2f4f8;}
+  .donut-wrap{position:relative;width:150px;height:150px;margin:6px auto 18px auto;}
+  .donut-ring{width:100%;height:100%;border-radius:50%;}
+  .donut-center{position:absolute;top:15%;left:15%;width:70%;height:70%;background:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 1px var(--border) inset;}
+  .donut-center b{font-size:24px;}
+  .donut-center span{font-size:11px;color:var(--text-muted);}
+  .legend-row{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:8px;}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .mini-stat-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .mini-stat{background:#f7f9fc;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--text-muted);}
+  .mini-stat strong{display:block;font-size:13.5px;color:var(--text);margin-top:2px;}
+  .badge-purple{background:#efe9fb;color:#6b3fc9;}
+  .badge-type-blue{background:#e8effc;color:#2a5aa8;}
+  .badge-type-grey{background:#eef1f6;color:var(--text-muted);}
   .action-summary-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
   .action-summary-row:last-child{border-bottom:none;}
 
   @media print{
-    .sidebar,.toolbar,.page-header .btn,.actions-cell,.gap-controls,#reportGenBtn{display:none!important;}
+    .sidebar,.toolbar,.page-header .btn,.actions-cell,.gap-controls,#reportGenBtn,.reports-tabs,.two-col,#page-reports .card:first-of-type{display:none!important;}
     .main{padding:0;}
     .app{display:block;}
   }
@@ -216,7 +240,7 @@
       <div class="score-ring">
         <svg width="96" height="96" viewBox="0 0 96 96">
           <circle cx="48" cy="48" r="40" fill="none" stroke="#22345c" stroke-width="9"/>
-          <circle id="scoreArc" cx="48" cy="48" r="40" fill="none" stroke="#1567d8" stroke-width="9" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+          <circle id="scoreArc" cx="48" cy="48" r="40" fill="none" stroke="#17a34a" stroke-width="9" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
         </svg>
         <div class="pct"><b id="scorePct">0%</b><span id="scoreLabel">—</span></div>
       </div>
@@ -336,11 +360,12 @@
         <button class="btn btn-outline" onclick="resetGaps()">↺ Reset Checklist</button>
       </div>
       <div id="stepper-gaps"></div>
+      <div class="grid-cards" id="gapsStatCards"></div>
       <div class="card" style="padding:0;">
         <div style="overflow-x:auto;">
         <table>
           <thead><tr>
-            <th>Department</th><th>NDPR Checklist Item</th><th>Status</th><th>Evidence / Notes</th>
+            <th>#</th><th>Recommendation</th><th>Category</th><th>Status</th><th>Evidence</th><th>Priority</th><th>Score</th><th>Action</th>
           </tr></thead>
           <tbody id="gapsTbody"></tbody>
         </table>
@@ -358,10 +383,11 @@
         <button class="btn btn-primary" onclick="openActionModal()">+ Add Action</button>
       </div>
       <div id="stepper-actions"></div>
+      <div class="grid-cards" id="actionsStatCards"></div>
       <div class="card">
         <div style="overflow-x:auto;">
         <table>
-          <thead><tr><th>Recommended Fix</th><th>Linked Requirement</th><th>Responsible Department</th><th>Due Date</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>#</th><th>Remediation</th><th>Gap Addressed</th><th>Category</th><th>Responsible Department</th><th>Due Date</th><th>Priority</th><th>Status</th><th>Progress</th><th>Evidence</th><th>Actions</th></tr></thead>
           <tbody id="actionsTbody"></tbody>
         </table>
         </div>
@@ -373,16 +399,49 @@
       <div class="page-header">
         <div class="page-title">
           <div class="title-icon">📊</div>
-          <div><h1 id="reportsTitle">Compliance Report</h1><p>A shareable snapshot of your NDPR compliance status.</p></div>
+          <div><h1 id="reportsTitle">Compliance Report</h1><p>View, export and share compliance assessment reports.</p></div>
         </div>
-        <button class="btn btn-primary" id="reportGenBtn" onclick="window.print()">🖨 Print / Save as PDF</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" id="reportGenBtn" onclick="window.print()">🖨 Export PDF</button>
+          <button class="btn btn-primary" onclick="openReportGenModal()">+ Generate New Report</button>
+        </div>
       </div>
       <div id="stepper-reports"></div>
+      <div class="grid-cards" id="reportsStatCards"></div>
+
+      <div class="reports-tabs" id="reportsTabs"></div>
+
+      <div class="two-col" style="margin-bottom:18px;">
+        <div class="panel">
+          <h3>Reports Overview</h3>
+          <div id="reportsOverviewDonut"></div>
+        </div>
+        <div class="panel">
+          <h3>Quick Export</h3>
+          <p style="color:var(--text-muted);font-size:12.5px;margin:0 0 12px 0;">Export the latest assessment data in your preferred format.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-outline" onclick="window.print()">📄 Export PDF</button>
+            <button class="btn btn-outline" onclick="exportReportExcel()">📊 Export Excel</button>
+            <button class="btn btn-outline" onclick="exportReportWord()">📝 Export Word</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>#</th><th>Report Name</th><th>Report Type</th><th>Date Generated</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="reportsListTbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 style="margin:26px 0 14px 0;">Latest Assessment Detail</h3>
       <div class="card" style="padding:22px;">
         <div class="report-block">
           <h4>Overall Compliance Score</h4>
           <div style="display:flex;align-items:center;gap:18px;">
-            <div style="font-size:40px;font-weight:800;color:var(--blue-dark);" id="reportScoreBig">0%</div>
+            <div style="font-size:40px;font-weight:800;color:var(--green-dark);" id="reportScoreBig">0%</div>
             <div style="color:var(--text-muted);font-size:13px;" id="reportScoreDesc">No assessment recorded yet.</div>
           </div>
         </div>
@@ -426,11 +485,44 @@
 
     <!-- DOCUMENTS -->
     <div class="page" id="page-documents">
-      <div class="page-header"><div class="page-title"><div class="title-icon">📄</div><div><h1>Documents</h1><p>Store links to your policy documents and evidence files.</p></div></div>
+      <div class="page-header">
+        <div class="page-title"><div class="title-icon">📄</div><div><h1>Documents</h1><p>Store, organize and manage compliance evidence and supporting documents.</p></div></div>
         <button class="btn btn-primary" onclick="openDocModal()">+ Add Document</button>
       </div>
+      <div class="grid-cards" id="docsStatCards"></div>
+      <div class="toolbar">
+        <div class="search-box"><span class="icon">🔍</span><input id="docSearch" placeholder="Search documents..." oninput="renderDocs()"></div>
+        <select id="docCategoryFilter" onchange="renderDocs()">
+          <option value="">All Categories</option>
+          <option>Policies &amp; Procedures</option>
+          <option>Templates</option>
+          <option>Records</option>
+          <option>Vendor Agreements</option>
+          <option>Evidence</option>
+          <option>Subject Application (MVP / Hospital App)</option>
+          <option>Demo Video</option>
+          <option>Other</option>
+        </select>
+        <select id="docTypeFilter" onchange="renderDocs()">
+          <option value="">All Document Types</option>
+          <option>Policy</option>
+          <option>Template</option>
+          <option>Record</option>
+          <option>Agreement</option>
+          <option>Video</option>
+          <option>Link</option>
+          <option>Other</option>
+        </select>
+        <select id="docStatusFilter" onchange="renderDocs()">
+          <option value="">All Status</option>
+          <option>Approved</option>
+          <option>Under Review</option>
+          <option>Not Approved</option>
+        </select>
+        <button class="btn btn-outline" onclick="clearDocFilters()">↺ Clear Filters</button>
+      </div>
       <div class="card"><div style="overflow-x:auto;"><table>
-        <thead><tr><th>Document Name</th><th>Category</th><th>Link / Reference</th><th>Last Updated</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Document Name</th><th>Category</th><th>Type</th><th>Status</th><th>Uploaded By</th><th>Upload Date</th><th>Actions</th></tr></thead>
         <tbody id="docsTbody"></tbody>
       </table></div></div>
     </div>
@@ -490,7 +582,7 @@
   <div class="modal">
     <h2 id="actionModalTitle">Add Action</h2>
     <input type="hidden" id="actionId">
-    <div class="form-field full"><label>Recommended Fix</label><input id="a_title" placeholder="e.g. Draft and publish privacy policy"></div>
+    <div class="form-field full"><label>Remediation</label><input id="a_title" placeholder="e.g. Draft and publish privacy policy"></div>
     <div class="form-field full"><label>Linked Requirement (optional)</label><input id="a_link" placeholder="e.g. Privacy notice"></div>
     <div class="form-grid">
       <div class="form-field"><label>Responsible Department</label><input id="a_owner" placeholder="e.g. IT Department"></div>
@@ -509,14 +601,80 @@
   </div>
 </div>
 
+<!-- Gap View Modal -->
+<div class="modal-overlay" id="gapViewModal">
+  <div class="modal">
+    <h2>Requirement Detail</h2>
+    <input type="hidden" id="gapViewId">
+    <div class="form-field full"><label>Category</label><div id="gv_cat" style="font-weight:600;"></div></div>
+    <div class="form-field full"><label>Recommendation</label><div id="gv_req" style="color:var(--text-muted);"></div></div>
+    <div class="form-field full"><label>Department</label><input id="gv_dept" placeholder="e.g. Executive Management"></div>
+    <div class="form-field full"><label>Status</label><div id="gv_status"></div></div>
+    <div class="form-field full"><label>Evidence</label><div id="gv_notes" style="color:var(--text-muted);"></div></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('gapViewModal')">Close</button>
+      <button class="btn btn-primary" onclick="saveGapViewDept()">Save Department</button>
+    </div>
+  </div>
+</div>
+
+<!-- Evidence Modal -->
+<div class="modal-overlay" id="evidenceModal">
+  <div class="modal">
+    <h2>Evidence</h2>
+    <input type="hidden" id="evidenceActionId">
+    <div id="ev_current" style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px;"></div>
+    <div class="form-field full"><label>📷 Upload Image</label><input id="ev_image" type="file" accept="image/*"></div>
+    <div class="form-field full"><label>📄 Upload Document (PDF or Word)</label><input id="ev_doc" type="file" accept=".pdf,.doc,.docx"></div>
+    <div class="form-field full"><label>📝 Write a Note</label><textarea id="ev_note" placeholder="Describe the evidence, or write a note if no file is available..."></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('evidenceModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvidence()">Save Evidence</button>
+    </div>
+  </div>
+</div>
+
 <!-- Document Modal -->
 <div class="modal-overlay" id="docModal">
   <div class="modal">
-    <h2>Add Document</h2>
+    <h2 id="docModalTitle">Add Document</h2>
     <input type="hidden" id="docId">
     <div class="form-field full"><label>Document Name</label><input id="d_name" placeholder="e.g. Privacy Policy v1"></div>
-    <div class="form-field full"><label>Category</label><input id="d_cat" placeholder="e.g. Policy, Evidence, Agreement"></div>
-    <div class="form-field full"><label>Link / Reference</label><input id="d_link" placeholder="URL or file reference"></div>
+    <div class="form-field full"><label>Short Description (optional)</label><input id="d_desc" placeholder="e.g. Hospital privacy policy document"></div>
+    <div class="form-grid">
+      <div class="form-field"><label>Category</label>
+        <select id="d_cat">
+          <option>Policies &amp; Procedures</option>
+          <option>Templates</option>
+          <option>Records</option>
+          <option>Vendor Agreements</option>
+          <option>Evidence</option>
+          <option>Subject Application (MVP / Hospital App)</option>
+          <option>Demo Video</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Type</label>
+        <select id="d_type">
+          <option>Policy</option>
+          <option>Template</option>
+          <option>Record</option>
+          <option>Agreement</option>
+          <option>Video</option>
+          <option>Link</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Status</label>
+        <select id="d_status">
+          <option>Approved</option>
+          <option>Under Review</option>
+          <option>Not Approved</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Uploaded By</label><input id="d_uploadedBy" placeholder="e.g. Your name or role"></div>
+    </div>
+    <div class="form-field full"><label>Link / Reference</label><input id="d_link" type="url" placeholder="Paste the URL here — e.g. your hospital app link or demo video link"></div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('docModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveDoc()">Save Document</button>
@@ -524,6 +682,39 @@
   </div>
 </div>
 
+<!-- Generate Report Modal -->
+<div class="modal-overlay" id="reportGenModal">
+  <div class="modal">
+    <h2>Generate New Report</h2>
+    <div class="form-field full"><label>Report Type</label>
+      <select id="rg_type">
+        <option value="assessment">Assessment Report</option>
+        <option value="gap">Gap Report</option>
+        <option value="action">Action Plan Report</option>
+        <option value="summary">Compliance Summary</option>
+        <option value="trend">Trend Report</option>
+      </select>
+    </div>
+    <p style="color:var(--text-muted);font-size:12px;">This captures a snapshot of your current Gap Assessment, Action Plan, and compliance score at this moment.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('reportGenModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="generateReportEntry()">Generate</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Report Modal -->
+<div class="modal-overlay" id="reportViewModal">
+  <div class="modal">
+    <h2 id="rv_title">Report</h2>
+    <pre id="rv_content" style="white-space:pre-wrap;font-family:inherit;font-size:12.5px;color:var(--text);background:#f7f9fc;border-radius:8px;padding:14px;max-height:50vh;overflow-y:auto;"></pre>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('reportViewModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Generate Report Modal end -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -567,14 +758,15 @@ const GAP_REQUIREMENTS = [
   {id:10, cat:"Compliance Monitoring and Audits", req:"Periodic internal compliance reviews and the annual NDPR audit filing are carried out"}
 ];
 
-let assets = [], gaps = [], actions = [], docs = [], settings = {};
+let assets = [], gaps = [], actions = [], docs = [], settings = {}, reports = [];
 let organisations = [], activeOrgId = null, submissions = {};
+let activeReportTab = 'all';
 
 /* ---------- Init ---------- */
 function orgKey(base){ return `org:${activeOrgId}:${base}`; }
 async function loadOrgWorkspace(orgId){
   if(!orgId){
-    assets = []; gaps = []; actions = []; docs = [];
+    assets = []; gaps = []; actions = []; docs = []; reports = [];
     return;
   }
   const savedAssets = await loadKey(`org:${orgId}:assets`, null);
@@ -582,11 +774,12 @@ async function loadOrgWorkspace(orgId){
   if(savedAssets === null) await saveKey(`org:${orgId}:assets`, assets);
 
   const savedGaps = await loadKey(`org:${orgId}:gaps`, null);
-  gaps = savedGaps !== null ? savedGaps : GAP_REQUIREMENTS.map(g=>({...g, status:'Not Assessed', dept:'', notes:''}));
+  gaps = savedGaps !== null ? savedGaps : GAP_REQUIREMENTS.map(g=>({...g, status:'Not Assessed', dept:'', notes:'', priority:'Medium'}));
   if(savedGaps === null) await saveKey(`org:${orgId}:gaps`, gaps);
 
   actions = await loadKey(`org:${orgId}:actions`, []);
   docs = await loadKey(`org:${orgId}:docs`, []);
+  reports = await loadKey(`org:${orgId}:reports`, []);
 }
 async function init(){
   settings = await loadKey('settings', {});
@@ -875,32 +1068,75 @@ function exportAssetsCSV(){
 }
 
 /* ---------- GAP ASSESSMENT ---------- */
+function gapScorePct(status){
+  return status==='Compliant' ? 100 : status==='Partial' ? 50 : 0;
+}
+function openGapView(id){
+  const g = gaps.find(x=>x.id===id);
+  if(!g) return;
+  document.getElementById('gapViewId').value = id;
+  document.getElementById('gv_cat').textContent = g.cat;
+  document.getElementById('gv_req').textContent = g.req;
+  document.getElementById('gv_dept').value = g.dept||'';
+  document.getElementById('gv_status').innerHTML = statusBadge(g.status);
+  document.getElementById('gv_notes').textContent = g.notes || 'No evidence recorded yet.';
+  document.getElementById('gapViewModal').classList.add('open');
+}
+async function saveGapViewDept(){
+  const id = Number(document.getElementById('gapViewId').value);
+  await updateGapField(id, 'dept', document.getElementById('gv_dept').value.trim());
+  closeModal('gapViewModal');
+  toast('Department saved');
+}
 function renderGaps(){
+  renderGapsStatCards();
   const tbody = document.getElementById('gapsTbody');
   if(!activeOrgId){
-    tbody.innerHTML = `<tr><td colspan="4"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to start the checklist.</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to start the checklist.</div></td></tr>`;
     return;
   }
-  tbody.innerHTML = gaps.map(g=>`
+  const prioClass = {'High':'badge-priority-high','Medium':'badge-priority-medium','Low':'badge-priority-low'};
+  tbody.innerHTML = gaps.map((g,i)=>{
+    const pct = gapScorePct(g.status);
+    const scoreColor = pct===100 ? 'var(--green-dark)' : pct===50 ? '#9a6b0a' : 'var(--red)';
+    return `
     <tr>
-      <td style="min-width:150px;">
-        <input class="notes-input" style="margin-top:0;" value="${escapeHtml(g.dept||'')}" placeholder="e.g. Customer Service" onblur="updateGapField(${g.id}, 'dept', this.value)">
-      </td>
-      <td style="min-width:220px;">
-        <div class="req" style="font-weight:600;">${escapeHtml(g.cat)}</div>
-        <div class="notes" style="color:var(--text-muted);">${escapeHtml(g.req)}</div>
-      </td>
+      <td>${i+1}</td>
+      <td style="min-width:200px;">${escapeHtml(g.req)}</td>
+      <td style="min-width:150px;">${escapeHtml(g.cat)}</td>
       <td style="min-width:150px;">
         ${statusBadge(g.status)}
         <select style="margin-top:6px;display:block;" onchange="updateGapStatus(${g.id}, this.value)">
           ${['Not Assessed','Compliant','Partial','Not Compliant'].map(s=>`<option ${s===g.status?'selected':''}>${s}</option>`).join('')}
         </select>
       </td>
-      <td style="min-width:240px;">
+      <td style="min-width:200px;">
         <textarea class="notes-input" style="margin-top:0;" placeholder="Evidence supporting this status..." onblur="updateGapField(${g.id}, 'notes', this.value)">${escapeHtml(g.notes||'')}</textarea>
       </td>
-    </tr>
-  `).join('');
+      <td style="min-width:110px;">
+        <span class="badge ${prioClass[g.priority||'Medium']}">${g.priority||'Medium'}</span>
+        <select style="margin-top:6px;display:block;" onchange="updateGapField(${g.id}, 'priority', this.value)">
+          ${['High','Medium','Low'].map(p=>`<option ${p===(g.priority||'Medium')?'selected':''}>${p}</option>`).join('')}
+        </select>
+      </td>
+      <td style="font-weight:700;color:${scoreColor};">${pct}%</td>
+      <td><button class="btn btn-outline btn-sm" onclick="openGapView(${g.id})">👁 View</button></td>
+    </tr>`;
+  }).join('');
+}
+function renderGapsStatCards(){
+  const container = document.getElementById('gapsStatCards');
+  if(!container) return;
+  const counts = {Compliant:0, Partial:0, 'Not Compliant':0, 'Not Assessed':0};
+  gaps.forEach(g=>counts[g.status]++);
+  const total = gaps.length || 1;
+  const score = computeScore();
+  container.innerHTML = `
+    <div class="stat-card icon-card"><div class="stat-icon icon-blue">📊</div><div><div class="label">Overall Compliance Score</div><div class="value">${score}%</div><div class="sub">Based on ${gaps.length} requirements</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-green">✔️</div><div><div class="label">Compliant</div><div class="value">${counts.Compliant}</div><div class="sub">${Math.round(counts.Compliant/total*100)}% of requirements</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-red">⛔</div><div><div class="label">Non-Compliant</div><div class="value">${counts['Not Compliant']}</div><div class="sub">${Math.round(counts['Not Compliant']/total*100)}% of requirements</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-amber">⚠️</div><div><div class="label">Partially Compliant</div><div class="value">${counts.Partial}</div><div class="sub">${Math.round(counts.Partial/total*100)}% of requirements</div></div></div>
+  `;
 }
 function statusBadge(status){
   const map = {'Compliant':'badge-compliant','Partial':'badge-partial','Not Compliant':'badge-noncompliant','Not Assessed':'badge-unassessed'};
@@ -957,31 +1193,72 @@ function updateScoreWidget(){
 
 /* ---------- ACTION PLAN ---------- */
 function renderActions(){
+  renderActionsStatCards();
   const tbody = document.getElementById('actionsTbody');
   if(!activeOrgId){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to see action items.</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to see action items.</div></td></tr>`;
     return;
   }
   if(actions.length===0){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">No action items yet. Gaps you mark as Partial or Not Compliant will suggest actions automatically.</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11"><div class="empty">No action items yet. Gaps you mark as Partial or Not Compliant will suggest actions automatically.</div></td></tr>`;
     return;
   }
   const statusClass = {'Pending':'badge-status-notstarted','In Progress':'badge-status-progress','Completed':'badge-status-done'};
   const prioClass = {'High':'badge-priority-high','Medium':'badge-priority-medium','Low':'badge-priority-low'};
-  tbody.innerHTML = actions.map(a=>`
+  const progressPct = {'Pending':0,'In Progress':50,'Completed':100};
+  tbody.innerHTML = actions.map((a,i)=>{
+    const linkedGap = gaps.find(g=>g.req===a.link || g.cat===a.link);
+    const category = linkedGap ? linkedGap.cat : '—';
+    const pct = progressPct[a.status] ?? 0;
+    const barColor = pct===100 ? 'var(--green)' : pct>=50 ? 'var(--amber)' : '#c7ccd6';
+    return `
     <tr>
+      <td>${i+1}</td>
       <td><strong>${escapeHtml(a.title)}</strong></td>
       <td>${escapeHtml(a.link||'—')}</td>
+      <td>${escapeHtml(category)}</td>
       <td>${escapeHtml(a.owner||'—')}</td>
       <td>${a.due||'—'}</td>
       <td><span class="badge ${prioClass[a.priority]||'badge-priority-low'}">${a.priority}</span></td>
       <td><span class="badge ${statusClass[a.status]||'badge-status-notstarted'}">${a.status}</span></td>
+      <td style="min-width:110px;">
+        <div class="bar-track" style="height:8px;"><div class="bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${pct}%</div>
+      </td>
+      <td style="min-width:150px;">
+        ${a.evidenceFileData ? `<a href="${a.evidenceFileData}" download="${escapeHtml(a.evidenceFileName||'evidence')}" style="color:var(--green-dark);font-weight:600;display:block;margin-bottom:4px;">📎 ${escapeHtml(a.evidenceFileName||'file')}</a>` : ''}
+        ${a.evidenceNote ? `<div style="color:var(--text-muted);font-size:12px;margin-bottom:4px;">${escapeHtml(a.evidenceNote)}</div>` : ''}
+        <button class="btn btn-outline btn-sm" onclick="openEvidenceModal(${a.id})">${(a.evidenceFileData||a.evidenceNote) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
+      </td>
       <td class="actions-cell">
         <button class="btn-edit-icon" onclick="editAction(${a.id})">✏️</button>
         <button class="btn-danger-icon" onclick="deleteAction(${a.id})">🗑️</button>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
+}
+function renderActionsStatCards(){
+  const container = document.getElementById('actionsStatCards');
+  if(!container) return;
+  const total = actions.length;
+  const inProgress = actions.filter(a=>a.status==='In Progress').length;
+  const completed = actions.filter(a=>a.status==='Completed').length;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const overdue = actions.filter(a=>a.due && new Date(a.due) < today && a.status!=='Completed').length;
+  const endOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+  const dueThisMonth = actions.filter(a=>{
+    if(!a.due) return false;
+    const d = new Date(a.due);
+    return d >= today && d <= endOfMonth;
+  }).length;
+  const pct = n => total ? Math.round(n/total*100) : 0;
+  container.innerHTML = `
+    <div class="stat-card icon-card"><div class="stat-icon icon-blue">📋</div><div><div class="label">Total Actions</div><div class="value">${total}</div><div class="sub">All action items</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-amber">⏱️</div><div><div class="label">In Progress</div><div class="value">${inProgress}</div><div class="sub">${pct(inProgress)}%</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-green">✔️</div><div><div class="label">Completed</div><div class="value">${completed}</div><div class="sub">${pct(completed)}%</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-red">❗</div><div><div class="label">Overdue</div><div class="value">${overdue}</div><div class="sub">${pct(overdue)}%</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-purple">📅</div><div><div class="label">Due This Month</div><div class="value">${dueThisMonth}</div><div class="sub">${pct(dueThisMonth)}%</div></div></div>
+  `;
 }
 function openActionModal(){
   if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
@@ -1008,13 +1285,17 @@ async function saveAction(){
   const title = document.getElementById('a_title').value.trim();
   if(!title){ toast('Action item is required'); return; }
   const idVal = document.getElementById('actionId').value;
+  const existing = idVal ? actions.find(a=>a.id===Number(idVal)) : null;
   const record = {
     id: idVal ? Number(idVal) : Date.now(),
     title, link: document.getElementById('a_link').value.trim(),
     owner: document.getElementById('a_owner').value.trim(),
     due: document.getElementById('a_due').value,
     priority: document.getElementById('a_priority').value,
-    status: document.getElementById('a_status').value
+    status: document.getElementById('a_status').value,
+    evidenceNote: existing?.evidenceNote || '',
+    evidenceFileName: existing?.evidenceFileName || '',
+    evidenceFileData: existing?.evidenceFileData || ''
   };
   if(idVal) actions = actions.map(a=>a.id===record.id?record:a);
   else actions.push(record);
@@ -1022,6 +1303,50 @@ async function saveAction(){
   closeModal('actionModal');
   renderActions(); renderDashboard(); renderReports();
   toast('Action saved');
+}
+function openEvidenceModal(id){
+  const a = actions.find(x=>x.id===id);
+  if(!a) return;
+  document.getElementById('evidenceActionId').value = id;
+  document.getElementById('ev_image').value = '';
+  document.getElementById('ev_doc').value = '';
+  document.getElementById('ev_note').value = a.evidenceNote||'';
+  document.getElementById('ev_current').textContent = a.evidenceFileName ? `Currently attached: ${a.evidenceFileName} (choose a new file above to replace it)` : 'No file attached yet — choose an image, a document, or just write a note below.';
+  document.getElementById('evidenceModal').classList.add('open');
+}
+async function saveEvidence(){
+  const id = Number(document.getElementById('evidenceActionId').value);
+  const a = actions.find(x=>x.id===id);
+  if(!a) return;
+  const file = document.getElementById('ev_image').files[0] || document.getElementById('ev_doc').files[0];
+  if(file){
+    if(file.size > 1500000){
+      toast('File too large — please attach something under 1.5MB');
+      return;
+    }
+    try{
+      a.evidenceFileData = await new Promise((resolve, reject)=>{
+        const reader = new FileReader();
+        reader.onload = ()=>resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      a.evidenceFileName = file.name;
+    }catch(e){
+      toast('Could not read the attached file');
+      return;
+    }
+  }
+  a.evidenceNote = document.getElementById('ev_note').value.trim();
+  try{
+    await saveKey(orgKey('actions'), actions);
+  }catch(e){
+    toast('Could not save — attached file may be too large for browser storage');
+    return;
+  }
+  closeModal('evidenceModal');
+  renderActions();
+  toast('Evidence saved');
 }
 async function deleteAction(id){
   if(!confirm('Delete this action item?')) return;
@@ -1032,43 +1357,118 @@ async function deleteAction(id){
 }
 
 /* ---------- DOCUMENTS ---------- */
+function renderDocsStatCards(){
+  const container = document.getElementById('docsStatCards');
+  if(!container) return;
+  const count = cat => docs.filter(d=>d.cat===cat).length;
+  const known = ['Policies & Procedures','Evidence','Vendor Agreements'];
+  const other = docs.filter(d=>!known.includes(d.cat)).length;
+  container.innerHTML = `
+    <div class="stat-card icon-card"><div class="stat-icon icon-blue">📁</div><div><div class="label">Total Documents</div><div class="value">${docs.length}</div><div class="sub">All uploaded files</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-green">📄</div><div><div class="label">Policies &amp; Procedures</div><div class="value">${count('Policies & Procedures')}</div><div class="sub">Compliance policies</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-purple">🗂️</div><div><div class="label">Evidence Files</div><div class="value">${count('Evidence')}</div><div class="sub">Assessment evidence</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-amber">🤝</div><div><div class="label">Vendor Agreements</div><div class="value">${count('Vendor Agreements')}</div><div class="sub">Third-party documents</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-red">📋</div><div><div class="label">Other Documents</div><div class="value">${other}</div><div class="sub">Miscellaneous files</div></div></div>
+  `;
+}
+function clearDocFilters(){
+  document.getElementById('docSearch').value='';
+  document.getElementById('docCategoryFilter').value='';
+  document.getElementById('docTypeFilter').value='';
+  document.getElementById('docStatusFilter').value='';
+  renderDocs();
+}
 function renderDocs(){
+  renderDocsStatCards();
   const tbody = document.getElementById('docsTbody');
   if(!activeOrgId){
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to add documents.</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">Select or create an organisation in <a href="#" onclick="goToPage('orgprofile');return false;">Organisation Profile</a> to add documents.</div></td></tr>`;
     return;
   }
-  if(docs.length===0){
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">No documents added yet.</div></td></tr>`;
+  const q = (document.getElementById('docSearch')?.value||'').toLowerCase();
+  const catF = document.getElementById('docCategoryFilter')?.value||'';
+  const typeF = document.getElementById('docTypeFilter')?.value||'';
+  const statusF = document.getElementById('docStatusFilter')?.value||'';
+  const filtered = docs.filter(d=>{
+    const matchesQ = !q || (d.name+' '+(d.description||'')).toLowerCase().includes(q);
+    const matchesCat = !catF || d.cat===catF;
+    const matchesType = !typeF || d.type===typeF;
+    const matchesStatus = !statusF || d.status===statusF;
+    return matchesQ && matchesCat && matchesType && matchesStatus;
+  });
+  if(filtered.length===0){
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">No documents found.</div></td></tr>`;
     return;
   }
-  tbody.innerHTML = docs.map(d=>`
+  const statusBadgeClass = {'Approved':'badge-compliant','Under Review':'badge-partial','Not Approved':'badge-noncompliant'};
+  tbody.innerHTML = filtered.map(d=>`
     <tr>
-      <td><strong>${escapeHtml(d.name)}</strong></td>
+      <td>
+        <strong>${d.link ? `<a href="${escapeHtml(d.link)}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;">📎 ${escapeHtml(d.name)}</a>` : escapeHtml(d.name)}</strong>
+        ${d.description ? `<div style="color:var(--text-muted);font-size:12px;margin-top:2px;">${escapeHtml(d.description)}</div>` : ''}
+      </td>
       <td>${escapeHtml(d.cat)}</td>
-      <td>${escapeHtml(d.link)}</td>
+      <td>${escapeHtml(d.type||'—')}</td>
+      <td><span class="badge ${statusBadgeClass[d.status]||'badge-unassessed'}">${escapeHtml(d.status||'Under Review')}</span></td>
+      <td>${escapeHtml(d.uploadedBy||'—')}</td>
       <td>${d.updated}</td>
-      <td class="actions-cell"><button class="btn-danger-icon" onclick="deleteDoc(${d.id})">🗑️</button></td>
+      <td class="actions-cell">
+        <button class="btn-edit-icon" onclick="editDoc(${d.id})">✏️</button>
+        <button class="btn-danger-icon" onclick="deleteDoc(${d.id})">🗑️</button>
+      </td>
     </tr>`).join('');
 }
 function openDocModal(){
   if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
-  ['docId','d_name','d_cat','d_link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('docModalTitle').textContent = 'Add Document';
+  ['docId','d_name','d_desc','d_link','d_uploadedBy'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('d_cat').value = 'Policies & Procedures';
+  document.getElementById('d_type').value = 'Policy';
+  document.getElementById('d_status').value = 'Under Review';
+  document.getElementById('docModal').classList.add('open');
+}
+function editDoc(id){
+  const d = docs.find(x=>x.id===id);
+  if(!d) return;
+  document.getElementById('docModalTitle').textContent = 'Edit Document';
+  document.getElementById('docId').value = d.id;
+  document.getElementById('d_name').value = d.name;
+  document.getElementById('d_desc').value = d.description||'';
+  document.getElementById('d_cat').value = d.cat;
+  document.getElementById('d_type').value = d.type||'Policy';
+  document.getElementById('d_status').value = d.status||'Under Review';
+  document.getElementById('d_uploadedBy').value = d.uploadedBy||'';
+  document.getElementById('d_link').value = d.link||'';
   document.getElementById('docModal').classList.add('open');
 }
 async function saveDoc(){
   const name = document.getElementById('d_name').value.trim();
   if(!name){ toast('Document name is required'); return; }
-  docs.push({id:Date.now(), name, cat:document.getElementById('d_cat').value.trim(), link:document.getElementById('d_link').value.trim(), updated:new Date().toLocaleDateString()});
+  const idVal = document.getElementById('docId').value;
+  const record = {
+    id: idVal ? Number(idVal) : Date.now(),
+    name,
+    description: document.getElementById('d_desc').value.trim(),
+    cat: document.getElementById('d_cat').value,
+    type: document.getElementById('d_type').value,
+    status: document.getElementById('d_status').value,
+    uploadedBy: document.getElementById('d_uploadedBy').value.trim(),
+    link: document.getElementById('d_link').value.trim(),
+    updated: new Date().toLocaleDateString()
+  };
+  if(idVal) docs = docs.map(d=>d.id===record.id?record:d);
+  else docs.push(record);
   await saveKey(orgKey('docs'), docs);
   closeModal('docModal');
   renderDocs();
-  toast('Document added');
+  toast('Document saved');
 }
 async function deleteDoc(id){
+  if(!confirm('Delete this document?')) return;
   docs = docs.filter(d=>d.id!==id);
   await saveKey(orgKey('docs'), docs);
   renderDocs();
+  toast('Document deleted');
 }
 
 /* ---------- SETTINGS ---------- */
@@ -1101,7 +1501,191 @@ function renderDashboard(){
 }
 
 /* ---------- REPORTS ---------- */
+/* ---------- REPORTS HUB ---------- */
+const REPORT_TYPE_META = {
+  all: {label:'All Reports'},
+  assessment: {label:'Assessment Reports', name:'NDPR Compliance Report', badge:'badge-compliant', color:'#17a34a'},
+  gap: {label:'Gap Reports', name:'Gap Analysis Report', badge:'badge-type-blue', color:'#2a5aa8'},
+  action: {label:'Action Plan Reports', name:'Action Plan Progress Report', badge:'badge-priority-medium', color:'#e8a723'},
+  summary: {label:'Compliance Summary', name:'Compliance Summary Report', badge:'badge-purple', color:'#6b3fc9'},
+  trend: {label:'Trend Reports', name:'Trend Report', badge:'badge-type-grey', color:'#8a94a6'}
+};
+function buildReportSummaryText(orgName){
+  const score = computeScore();
+  const counts = {'Compliant':0,'Partial':0,'Not Compliant':0,'Not Assessed':0};
+  gaps.forEach(g=>counts[g.status]++);
+  const lines = [];
+  lines.push(`NDPR Compliance Report — ${orgName || 'Unnamed Organisation'}`);
+  lines.push(`Generated: ${new Date().toLocaleString()}`);
+  lines.push('');
+  lines.push(`Overall Compliance Score: ${score}%`);
+  lines.push(`Compliant: ${counts.Compliant} | Partial: ${counts.Partial} | Not Compliant: ${counts['Not Compliant']} | Not Assessed: ${counts['Not Assessed']}`);
+  lines.push('');
+  lines.push('Findings:');
+  const findings = gaps.filter(g=>g.status==='Not Compliant'||g.status==='Partial');
+  if(findings.length===0) lines.push('- No open findings.');
+  findings.forEach(g=>lines.push(`- [${g.status}] ${g.cat}: ${g.notes||'No evidence recorded.'}`));
+  lines.push('');
+  lines.push('Action Plan:');
+  if(actions.length===0) lines.push('- No action items recorded.');
+  actions.forEach(a=>lines.push(`- ${a.title} (Status: ${a.status}, Priority: ${a.priority}, Due: ${a.due||'N/A'})`));
+  lines.push('');
+  lines.push('Data Map Summary:');
+  lines.push(`- Total data assets mapped: ${assets.length}`);
+  lines.push(`- Departments involved: ${[...new Set(assets.map(a=>a.dept))].length}`);
+  return lines.join('\n');
+}
+function openReportGenModal(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  document.getElementById('reportGenModal').classList.add('open');
+}
+async function generateReportEntry(){
+  const org = getActiveOrg();
+  if(!org){ toast('Select an organisation first'); return; }
+  const type = document.getElementById('rg_type').value;
+  const meta = REPORT_TYPE_META[type];
+  const entry = {
+    id: Date.now(),
+    name: meta.name,
+    type,
+    date: new Date().toLocaleString(),
+    status: 'Completed',
+    summary: buildReportSummaryText(org.name)
+  };
+  reports.push(entry);
+  await saveKey(orgKey('reports'), reports);
+  closeModal('reportGenModal');
+  renderReportsTabs(); renderReportsList(); renderReportsOverview();
+  toast('Report generated');
+}
+function setReportTab(t){
+  activeReportTab = t;
+  renderReportsTabs();
+  renderReportsList();
+}
+function renderReportsTabs(){
+  const container = document.getElementById('reportsTabs');
+  if(!container) return;
+  const order = ['all','assessment','gap','action','summary','trend'];
+  container.innerHTML = order.map(t=>{
+    const count = t==='all' ? reports.length : reports.filter(r=>r.type===t).length;
+    return `<button class="report-tab ${t===activeReportTab?'active':''}" onclick="setReportTab('${t}')">${REPORT_TYPE_META[t].label}${t!=='all'?` (${count})`:''}</button>`;
+  }).join('');
+}
+function renderReportsList(){
+  const tbody = document.getElementById('reportsListTbody');
+  if(!tbody) return;
+  const filtered = (activeReportTab==='all' ? reports : reports.filter(r=>r.type===activeReportTab)).slice().reverse();
+  tbody.innerHTML = filtered.length ? filtered.map((r,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><strong>${escapeHtml(r.name)}</strong></td>
+      <td><span class="badge ${REPORT_TYPE_META[r.type]?.badge||'badge-type-grey'}">${REPORT_TYPE_META[r.type]?.label.replace(/s$/,'')||r.type}</span></td>
+      <td>${r.date}</td>
+      <td><span class="badge badge-compliant">${r.status}</span></td>
+      <td class="actions-cell">
+        <button class="btn-edit-icon" onclick="viewReportEntry(${r.id})">👁</button>
+        <button class="btn-edit-icon" onclick="downloadReportEntry(${r.id})">⬇</button>
+        <button class="btn-danger-icon" onclick="deleteReportEntry(${r.id})">🗑️</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="6"><div class="empty">No reports generated yet — tap "+ Generate New Report" to create your first one.</div></td></tr>`;
+}
+function renderReportsOverview(){
+  const container = document.getElementById('reportsOverviewDonut');
+  if(!container) return;
+  const types = ['assessment','gap','action','summary','trend'];
+  const total = reports.length;
+  let gradient = '';
+  let acc = 0;
+  const legendRows = [];
+  if(total===0){
+    gradient = '#eef1f6 0% 100%';
+  } else {
+    types.forEach(t=>{
+      const count = reports.filter(r=>r.type===t).length;
+      if(count===0) return;
+      const pct = (count/total)*100;
+      const start = acc, end = acc+pct;
+      gradient += `${REPORT_TYPE_META[t].color} ${start}% ${end}%, `;
+      acc = end;
+      legendRows.push(`<div class="legend-row"><span class="legend-dot" style="background:${REPORT_TYPE_META[t].color};"></span><span style="flex:1;">${REPORT_TYPE_META[t].label}</span><strong>${count} (${Math.round(pct)}%)</strong></div>`);
+    });
+    gradient = gradient.replace(/, $/, '');
+  }
+  const typeCounts = types.map(t=>({t, count: reports.filter(r=>r.type===t).length}));
+  const mostGenerated = typeCounts.slice().sort((a,b)=>b.count-a.count)[0];
+  const lastReport = reports.slice().sort((a,b)=>b.id-a.id)[0];
+  container.innerHTML = `
+    <div class="donut-wrap">
+      <div class="donut-ring" style="background:conic-gradient(${gradient});"></div>
+      <div class="donut-center"><b>${total}</b><span>Total Reports</span></div>
+    </div>
+    <div>${legendRows.join('') || '<div class="empty">No reports yet.</div>'}</div>
+    <div class="mini-stat-pair">
+      <div class="mini-stat">Most Generated<strong>${mostGenerated && mostGenerated.count>0 ? REPORT_TYPE_META[mostGenerated.t].label : '—'}</strong></div>
+      <div class="mini-stat">Last Generated<strong>${lastReport ? lastReport.date : '—'}</strong></div>
+    </div>
+  `;
+}
+function viewReportEntry(id){
+  const r = reports.find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('rv_title').textContent = r.name;
+  document.getElementById('rv_content').textContent = r.summary;
+  document.getElementById('reportViewModal').classList.add('open');
+}
+function downloadReportEntry(id){
+  const r = reports.find(x=>x.id===id);
+  if(!r) return;
+  const blob = new Blob([r.summary], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download = r.name.replace(/\s+/g,'-').toLowerCase()+'.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+async function deleteReportEntry(id){
+  if(!confirm('Delete this report?')) return;
+  reports = reports.filter(r=>r.id!==id);
+  await saveKey(orgKey('reports'), reports);
+  renderReportsTabs(); renderReportsList(); renderReportsOverview();
+  toast('Report deleted');
+}
+function exportReportExcel(){
+  const org = getActiveOrg();
+  const text = buildReportSummaryText(org?.name);
+  const blob = new Blob([text], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='compliance-report.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+function exportReportWord(){
+  const org = getActiveOrg();
+  const text = buildReportSummaryText(org?.name);
+  const html = `<html><body><pre style="font-family:Calibri,Arial,sans-serif;">${escapeHtml(text)}</pre></body></html>`;
+  const blob = new Blob([html], {type:'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='compliance-report.doc'; a.click();
+  URL.revokeObjectURL(url);
+}
+function renderReportsStatCards(){
+  const container = document.getElementById('reportsStatCards');
+  if(!container) return;
+  const counts = {Compliant:0, Partial:0, 'Not Compliant':0, 'Not Assessed':0};
+  gaps.forEach(g=>counts[g.status]++);
+  const score = computeScore();
+  container.innerHTML = `
+    <div class="stat-card icon-card"><div class="stat-icon icon-blue">📈</div><div><div class="label">Overall Compliance Score</div><div class="value">${score}%</div><div class="sub">Based on ${gaps.length} requirements</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-green">✔️</div><div><div class="label">Compliant</div><div class="value">${counts.Compliant}</div><div class="sub">Requirements met</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-red">⛔</div><div><div class="label">Non-Compliant</div><div class="value">${counts['Not Compliant']}</div><div class="sub">Requirements not met</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-amber">⚠️</div><div><div class="label">Partially Compliant</div><div class="value">${counts.Partial}</div><div class="sub">Requirements partial</div></div></div>
+    <div class="stat-card icon-card"><div class="stat-icon icon-purple">🗂️</div><div><div class="label">Total Requirements</div><div class="value">${gaps.length}</div><div class="sub">In this assessment</div></div></div>
+  `;
+}
 function renderReports(){
+  renderReportsStatCards();
+  renderReportsTabs();
+  renderReportsList();
+  renderReportsOverview();
   const score = computeScore();
   document.getElementById('reportScoreBig').textContent = score+'%';
   document.getElementById('reportScoreDesc').textContent = `Based on ${gaps.length} NDPR requirements assessed on ${new Date().toLocaleDateString()}.`;

@@ -357,7 +357,10 @@
           <div class="title-icon">📋</div>
           <div><h1 id="gapsTitle">Gap Assessment</h1><p>Score each NDPR requirement and record supporting evidence.</p></div>
         </div>
-        <button class="btn btn-outline" onclick="resetGaps()">↺ Reset Checklist</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="resetGaps()">↺ Reset Checklist</button>
+          <button class="btn btn-primary" onclick="openGapModal()">+ Add Requirement</button>
+        </div>
       </div>
       <div id="stepper-gaps"></div>
       <div class="grid-cards" id="gapsStatCards"></div>
@@ -602,18 +605,25 @@
 </div>
 
 <!-- Gap View Modal -->
-<div class="modal-overlay" id="gapViewModal">
+<div class="modal-overlay" id="gapModal">
   <div class="modal">
-    <h2>Requirement Detail</h2>
-    <input type="hidden" id="gapViewId">
-    <div class="form-field full"><label>Category</label><div id="gv_cat" style="font-weight:600;"></div></div>
-    <div class="form-field full"><label>Recommendation</label><div id="gv_req" style="color:var(--text-muted);"></div></div>
-    <div class="form-field full"><label>Department</label><input id="gv_dept" placeholder="e.g. Executive Management"></div>
-    <div class="form-field full"><label>Status</label><div id="gv_status"></div></div>
-    <div class="form-field full"><label>Evidence</label><div id="gv_notes" style="color:var(--text-muted);"></div></div>
+    <h2 id="gapModalTitle">Add Requirement</h2>
+    <input type="hidden" id="gapModalId">
+    <div class="form-field full"><label>Category</label><input id="gm_cat" placeholder="e.g. Vendor Risk Management"></div>
+    <div class="form-field full"><label>Recommendation</label><textarea id="gm_req" placeholder="Describe what this requirement expects..."></textarea></div>
+    <div class="form-field full"><label>Department</label><input id="gm_dept" placeholder="e.g. Executive Management"></div>
+    <div class="form-grid">
+      <div class="form-field"><label>Status</label>
+        <select id="gm_status"><option>Not Assessed</option><option>Compliant</option><option>Partial</option><option>Not Compliant</option></select>
+      </div>
+      <div class="form-field"><label>Priority</label>
+        <select id="gm_priority"><option>High</option><option selected>Medium</option><option>Low</option></select>
+      </div>
+    </div>
+    <div class="form-field full"><label>Evidence</label><textarea id="gm_notes" placeholder="Evidence supporting this status..."></textarea></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeModal('gapViewModal')">Close</button>
-      <button class="btn btn-primary" onclick="saveGapViewDept()">Save Department</button>
+      <button class="btn btn-outline" onclick="closeModal('gapModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGapModal()">Save Requirement</button>
     </div>
   </div>
 </div>
@@ -623,6 +633,7 @@
   <div class="modal">
     <h2>Evidence</h2>
     <input type="hidden" id="evidenceActionId">
+    <input type="hidden" id="evidenceContext" value="action">
     <div id="ev_current" style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px;"></div>
     <div class="form-field full"><label>📷 Upload Image</label><input id="ev_image" type="file" accept="image/*"></div>
     <div class="form-field full"><label>📄 Upload Document (PDF or Word)</label><input id="ev_doc" type="file" accept=".pdf,.doc,.docx"></div>
@@ -1071,22 +1082,53 @@ function exportAssetsCSV(){
 function gapScorePct(status){
   return status==='Compliant' ? 100 : status==='Partial' ? 50 : 0;
 }
-function openGapView(id){
+function openGapModal(){
+  if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  document.getElementById('gapModalTitle').textContent = 'Add Requirement';
+  ['gapModalId','gm_cat','gm_req','gm_dept','gm_notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('gm_status').value = 'Not Assessed';
+  document.getElementById('gm_priority').value = 'Medium';
+  document.getElementById('gapModal').classList.add('open');
+}
+function editGapModal(id){
   const g = gaps.find(x=>x.id===id);
   if(!g) return;
-  document.getElementById('gapViewId').value = id;
-  document.getElementById('gv_cat').textContent = g.cat;
-  document.getElementById('gv_req').textContent = g.req;
-  document.getElementById('gv_dept').value = g.dept||'';
-  document.getElementById('gv_status').innerHTML = statusBadge(g.status);
-  document.getElementById('gv_notes').textContent = g.notes || 'No evidence recorded yet.';
-  document.getElementById('gapViewModal').classList.add('open');
+  document.getElementById('gapModalTitle').textContent = 'Edit Requirement';
+  document.getElementById('gapModalId').value = id;
+  document.getElementById('gm_cat').value = g.cat;
+  document.getElementById('gm_req').value = g.req;
+  document.getElementById('gm_dept').value = g.dept||'';
+  document.getElementById('gm_status').value = g.status;
+  document.getElementById('gm_priority').value = g.priority||'Medium';
+  document.getElementById('gm_notes').value = g.notes||'';
+  document.getElementById('gapModal').classList.add('open');
 }
-async function saveGapViewDept(){
-  const id = Number(document.getElementById('gapViewId').value);
-  await updateGapField(id, 'dept', document.getElementById('gv_dept').value.trim());
-  closeModal('gapViewModal');
-  toast('Department saved');
+async function saveGapModal(){
+  const cat = document.getElementById('gm_cat').value.trim();
+  if(!cat){ toast('Category is required'); return; }
+  const idVal = document.getElementById('gapModalId').value;
+  const record = {
+    id: idVal ? Number(idVal) : Date.now(),
+    cat,
+    req: document.getElementById('gm_req').value.trim(),
+    dept: document.getElementById('gm_dept').value.trim(),
+    status: document.getElementById('gm_status').value,
+    priority: document.getElementById('gm_priority').value,
+    notes: document.getElementById('gm_notes').value.trim()
+  };
+  if(idVal) gaps = gaps.map(g=>g.id===record.id?record:g);
+  else gaps.push(record);
+  await saveKey(orgKey('gaps'), gaps);
+  closeModal('gapModal');
+  renderGaps(); renderDashboard(); renderReports(); updateScoreWidget();
+  toast('Requirement saved');
+}
+async function deleteGapItem(id){
+  if(!confirm('Delete this requirement from the checklist?')) return;
+  gaps = gaps.filter(g=>g.id!==id);
+  await saveKey(orgKey('gaps'), gaps);
+  renderGaps(); renderDashboard(); renderReports(); updateScoreWidget();
+  toast('Requirement deleted');
 }
 function renderGaps(){
   renderGapsStatCards();
@@ -1111,7 +1153,9 @@ function renderGaps(){
         </select>
       </td>
       <td style="min-width:200px;">
-        <textarea class="notes-input" style="margin-top:0;" placeholder="Evidence supporting this status..." onblur="updateGapField(${g.id}, 'notes', this.value)">${escapeHtml(g.notes||'')}</textarea>
+        ${g.evidenceFileData ? `<a href="${g.evidenceFileData}" download="${escapeHtml(g.evidenceFileName||'evidence')}" style="color:var(--green-dark);font-weight:600;display:block;margin-bottom:4px;">📎 ${escapeHtml(g.evidenceFileName||'file')}</a>` : ''}
+        ${g.notes ? `<div style="color:var(--text-muted);font-size:12px;margin-bottom:4px;">${escapeHtml(g.notes)}</div>` : ''}
+        <button class="btn btn-outline btn-sm" onclick="openEvidenceModal('gap', ${g.id})">${(g.evidenceFileData||g.notes) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
       </td>
       <td style="min-width:110px;">
         <span class="badge ${prioClass[g.priority||'Medium']}">${g.priority||'Medium'}</span>
@@ -1120,7 +1164,10 @@ function renderGaps(){
         </select>
       </td>
       <td style="font-weight:700;color:${scoreColor};">${pct}%</td>
-      <td><button class="btn btn-outline btn-sm" onclick="openGapView(${g.id})">👁 View</button></td>
+      <td class="actions-cell">
+        <button class="btn-edit-icon" onclick="editGapModal(${g.id})">✏️</button>
+        <button class="btn-danger-icon" onclick="deleteGapItem(${g.id})">🗑️</button>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -1228,7 +1275,7 @@ function renderActions(){
       <td style="min-width:150px;">
         ${a.evidenceFileData ? `<a href="${a.evidenceFileData}" download="${escapeHtml(a.evidenceFileName||'evidence')}" style="color:var(--green-dark);font-weight:600;display:block;margin-bottom:4px;">📎 ${escapeHtml(a.evidenceFileName||'file')}</a>` : ''}
         ${a.evidenceNote ? `<div style="color:var(--text-muted);font-size:12px;margin-bottom:4px;">${escapeHtml(a.evidenceNote)}</div>` : ''}
-        <button class="btn btn-outline btn-sm" onclick="openEvidenceModal(${a.id})">${(a.evidenceFileData||a.evidenceNote) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
+        <button class="btn btn-outline btn-sm" onclick="openEvidenceModal('action', ${a.id})">${(a.evidenceFileData||a.evidenceNote) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
       </td>
       <td class="actions-cell">
         <button class="btn-edit-icon" onclick="editAction(${a.id})">✏️</button>
@@ -1304,20 +1351,23 @@ async function saveAction(){
   renderActions(); renderDashboard(); renderReports();
   toast('Action saved');
 }
-function openEvidenceModal(id){
-  const a = actions.find(x=>x.id===id);
-  if(!a) return;
+function openEvidenceModal(context, id){
+  const item = context==='gap' ? gaps.find(x=>x.id===id) : actions.find(x=>x.id===id);
+  if(!item) return;
+  document.getElementById('evidenceContext').value = context;
   document.getElementById('evidenceActionId').value = id;
   document.getElementById('ev_image').value = '';
   document.getElementById('ev_doc').value = '';
-  document.getElementById('ev_note').value = a.evidenceNote||'';
-  document.getElementById('ev_current').textContent = a.evidenceFileName ? `Currently attached: ${a.evidenceFileName} (choose a new file above to replace it)` : 'No file attached yet — choose an image, a document, or just write a note below.';
+  document.getElementById('ev_note').value = context==='gap' ? (item.notes||'') : (item.evidenceNote||'');
+  document.getElementById('ev_current').textContent = item.evidenceFileName ? `Currently attached: ${item.evidenceFileName} (choose a new file above to replace it)` : 'No file attached yet — choose an image, a document, or just write a note below.';
   document.getElementById('evidenceModal').classList.add('open');
 }
 async function saveEvidence(){
+  const context = document.getElementById('evidenceContext').value;
   const id = Number(document.getElementById('evidenceActionId').value);
-  const a = actions.find(x=>x.id===id);
-  if(!a) return;
+  const list = context==='gap' ? gaps : actions;
+  const item = list.find(x=>x.id===id);
+  if(!item) return;
   const file = document.getElementById('ev_image').files[0] || document.getElementById('ev_doc').files[0];
   if(file){
     if(file.size > 1500000){
@@ -1325,27 +1375,30 @@ async function saveEvidence(){
       return;
     }
     try{
-      a.evidenceFileData = await new Promise((resolve, reject)=>{
+      item.evidenceFileData = await new Promise((resolve, reject)=>{
         const reader = new FileReader();
         reader.onload = ()=>resolve(reader.result);
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
-      a.evidenceFileName = file.name;
+      item.evidenceFileName = file.name;
     }catch(e){
       toast('Could not read the attached file');
       return;
     }
   }
-  a.evidenceNote = document.getElementById('ev_note').value.trim();
+  const noteVal = document.getElementById('ev_note').value.trim();
+  if(context==='gap') item.notes = noteVal;
+  else item.evidenceNote = noteVal;
   try{
-    await saveKey(orgKey('actions'), actions);
+    await saveKey(orgKey(context==='gap' ? 'gaps' : 'actions'), list);
   }catch(e){
     toast('Could not save — attached file may be too large for browser storage');
     return;
   }
   closeModal('evidenceModal');
-  renderActions();
+  if(context==='gap'){ renderGaps(); renderDashboard(); renderReports(); updateScoreWidget(); }
+  else { renderActions(); }
   toast('Evidence saved');
 }
 async function deleteAction(id){

@@ -368,7 +368,7 @@
         <div style="overflow-x:auto;">
         <table>
           <thead><tr>
-            <th>#</th><th>Recommendation</th><th>Category</th><th>Status</th><th>Evidence</th><th>Priority</th><th>Score</th><th>Action</th>
+            <th>#</th><th>Requirement</th><th>Category</th><th>Status</th><th>Evidence</th><th>Priority</th><th>Score</th><th>Action</th>
           </tr></thead>
           <tbody id="gapsTbody"></tbody>
         </table>
@@ -587,6 +587,22 @@
     <input type="hidden" id="actionId">
     <div class="form-field full"><label>Remediation</label><input id="a_title" placeholder="e.g. Draft and publish privacy policy"></div>
     <div class="form-field full"><label>Linked Requirement (optional)</label><input id="a_link" placeholder="e.g. Privacy notice"></div>
+    <div class="form-field full"><label>Category</label>
+      <select id="a_category">
+        <option value="">Select category (or leave to auto-match linked requirement)</option>
+        <option>Data Protection Officer (DPO) Appointment</option>
+        <option>Data Inventory and Mapping</option>
+        <option>Legal Basis for Processing</option>
+        <option>Privacy Policy and Notices</option>
+        <option>Data Subject Rights</option>
+        <option>Data Breach Management</option>
+        <option>Training and Awareness</option>
+        <option>Data Transfer Controls</option>
+        <option>Record Keeping and Documentation</option>
+        <option>Compliance Monitoring and Audits</option>
+        <option>Other</option>
+      </select>
+    </div>
     <div class="form-grid">
       <div class="form-field"><label>Responsible Department</label><input id="a_owner" placeholder="e.g. IT Department"></div>
       <div class="form-field"><label>Due Date</label><input id="a_due" type="date"></div>
@@ -610,7 +626,7 @@
     <h2 id="gapModalTitle">Add Requirement</h2>
     <input type="hidden" id="gapModalId">
     <div class="form-field full"><label>Category</label><input id="gm_cat" placeholder="e.g. Vendor Risk Management"></div>
-    <div class="form-field full"><label>Recommendation</label><textarea id="gm_req" placeholder="Describe what this requirement expects..."></textarea></div>
+    <div class="form-field full"><label>Requirement</label><textarea id="gm_req" placeholder="Describe what this requirement expects..."></textarea></div>
     <div class="form-field full"><label>Department</label><input id="gm_dept" placeholder="e.g. Executive Management"></div>
     <div class="form-grid">
       <div class="form-field"><label>Status</label>
@@ -1255,7 +1271,7 @@ function renderActions(){
   const progressPct = {'Pending':0,'In Progress':50,'Completed':100};
   tbody.innerHTML = actions.map((a,i)=>{
     const linkedGap = gaps.find(g=>g.req===a.link || g.cat===a.link);
-    const category = linkedGap ? linkedGap.cat : '—';
+    const category = a.category || (linkedGap ? linkedGap.cat : '—');
     const pct = progressPct[a.status] ?? 0;
     const barColor = pct===100 ? 'var(--green)' : pct>=50 ? 'var(--amber)' : '#c7ccd6';
     return `
@@ -1311,6 +1327,7 @@ function openActionModal(){
   if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
   document.getElementById('actionModalTitle').textContent = 'Add Action';
   ['actionId','a_title','a_link','a_owner','a_due'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a_category').value = '';
   document.getElementById('a_priority').value='Medium';
   document.getElementById('a_status').value='Pending';
   document.getElementById('actionModal').classList.add('open');
@@ -1322,6 +1339,7 @@ function editAction(id){
   document.getElementById('actionId').value = a.id;
   document.getElementById('a_title').value = a.title;
   document.getElementById('a_link').value = a.link||'';
+  document.getElementById('a_category').value = a.category||'';
   document.getElementById('a_owner').value = a.owner||'';
   document.getElementById('a_due').value = a.due||'';
   document.getElementById('a_priority').value = a.priority;
@@ -1336,6 +1354,7 @@ async function saveAction(){
   const record = {
     id: idVal ? Number(idVal) : Date.now(),
     title, link: document.getElementById('a_link').value.trim(),
+    category: document.getElementById('a_category').value,
     owner: document.getElementById('a_owner').value.trim(),
     due: document.getElementById('a_due').value,
     priority: document.getElementById('a_priority').value,

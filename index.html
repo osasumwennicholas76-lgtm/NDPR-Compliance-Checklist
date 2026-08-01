@@ -713,14 +713,21 @@
 <div class="modal-overlay" id="reportGenModal">
   <div class="modal">
     <h2>Generate New Report</h2>
-    <div class="form-field full"><label>Report Type</label>
-      <select id="rg_type">
-        <option value="assessment">Assessment Report</option>
-        <option value="gap">Gap Report</option>
-        <option value="action">Action Plan Report</option>
-        <option value="summary">Compliance Summary</option>
-        <option value="trend">Trend Report</option>
-      </select>
+    <div class="form-field full"><label>Report Name</label><input id="rg_name" placeholder="e.g. NDPR Compliance Report — August"></div>
+    <div class="form-grid">
+      <div class="form-field"><label>Report Type</label>
+        <select id="rg_type" onchange="rgTypeChanged()">
+          <option value="assessment">Assessment Report</option>
+          <option value="gap">Gap Report</option>
+          <option value="action">Action Plan Report</option>
+          <option value="summary">Compliance Summary</option>
+          <option value="trend">Trend Report</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Status</label>
+        <select id="rg_status"><option>Completed</option><option>Draft</option><option>Scheduled</option></select>
+      </div>
+      <div class="form-field full"><label>Date Generated</label><input id="rg_date" type="date"></div>
     </div>
     <p style="color:var(--text-muted);font-size:12px;">This captures a snapshot of your current Gap Assessment, Action Plan, and compliance score at this moment.</p>
     <div class="modal-actions">
@@ -1607,21 +1614,39 @@ function buildReportSummaryText(orgName){
   lines.push(`- Departments involved: ${[...new Set(assets.map(a=>a.dept))].length}`);
   return lines.join('\n');
 }
+function rgTypeChanged(){
+  const type = document.getElementById('rg_type').value;
+  const nameField = document.getElementById('rg_name');
+  if(!nameField.dataset.userEdited){
+    nameField.value = REPORT_TYPE_META[type].name;
+  }
+}
 function openReportGenModal(){
   if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
+  document.getElementById('rg_type').value = 'assessment';
+  const nameField = document.getElementById('rg_name');
+  nameField.value = REPORT_TYPE_META.assessment.name;
+  nameField.dataset.userEdited = '';
+  nameField.oninput = ()=>{ nameField.dataset.userEdited = '1'; };
+  document.getElementById('rg_status').value = 'Completed';
+  document.getElementById('rg_date').value = new Date().toISOString().slice(0,10);
   document.getElementById('reportGenModal').classList.add('open');
 }
 async function generateReportEntry(){
   const org = getActiveOrg();
   if(!org){ toast('Select an organisation first'); return; }
+  const name = document.getElementById('rg_name').value.trim();
+  if(!name){ toast('Report name is required'); return; }
   const type = document.getElementById('rg_type').value;
-  const meta = REPORT_TYPE_META[type];
+  const status = document.getElementById('rg_status').value;
+  const dateVal = document.getElementById('rg_date').value;
+  const dateDisplay = dateVal ? new Date(dateVal+'T00:00:00').toLocaleDateString() : new Date().toLocaleDateString();
   const entry = {
     id: Date.now(),
-    name: meta.name,
+    name,
     type,
-    date: new Date().toLocaleString(),
-    status: 'Completed',
+    date: dateDisplay,
+    status,
     summary: buildReportSummaryText(org.name)
   };
   reports.push(entry);
@@ -1654,7 +1679,7 @@ function renderReportsList(){
       <td><strong>${escapeHtml(r.name)}</strong></td>
       <td><span class="badge ${REPORT_TYPE_META[r.type]?.badge||'badge-type-grey'}">${REPORT_TYPE_META[r.type]?.label.replace(/s$/,'')||r.type}</span></td>
       <td>${r.date}</td>
-      <td><span class="badge badge-compliant">${r.status}</span></td>
+      <td><span class="badge ${r.status==='Completed'?'badge-compliant':r.status==='Draft'?'badge-unassessed':'badge-partial'}">${r.status}</span></td>
       <td class="actions-cell">
         <button class="btn-edit-icon" onclick="viewReportEntry(${r.id})">👁</button>
         <button class="btn-edit-icon" onclick="downloadReportEntry(${r.id})">⬇</button>

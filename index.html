@@ -590,17 +590,6 @@
     <div class="form-field full"><label>Category</label>
       <select id="a_category">
         <option value="">Select category (or leave to auto-match linked requirement)</option>
-        <option>Data Protection Officer (DPO) Appointment</option>
-        <option>Data Inventory and Mapping</option>
-        <option>Legal Basis for Processing</option>
-        <option>Privacy Policy and Notices</option>
-        <option>Data Subject Rights</option>
-        <option>Data Breach Management</option>
-        <option>Training and Awareness</option>
-        <option>Data Transfer Controls</option>
-        <option>Record Keeping and Documentation</option>
-        <option>Compliance Monitoring and Audits</option>
-        <option>Other</option>
       </select>
     </div>
     <div class="form-grid">
@@ -1339,11 +1328,18 @@ function renderActionsStatCards(){
     <div class="stat-card icon-card"><div class="stat-icon icon-purple">📅</div><div><div class="label">Due This Month</div><div class="value">${dueThisMonth}</div><div class="sub">${pct(dueThisMonth)}%</div></div></div>
   `;
 }
+function populateActionCategoryOptions(selected){
+  const sel = document.getElementById('a_category');
+  const liveCats = [...new Set(gaps.map(g=>g.cat))];
+  sel.innerHTML = '<option value="">Select category (or leave to auto-match linked requirement)</option>' +
+    liveCats.map(c=>`<option ${c===selected?'selected':''}>${escapeHtml(c)}</option>`).join('') +
+    `<option ${selected==='Other'?'selected':''}>Other</option>`;
+}
 function openActionModal(){
   if(!activeOrgId){ toast('Select or create an organisation first'); goToPage('orgprofile'); return; }
   document.getElementById('actionModalTitle').textContent = 'Add Action';
   ['actionId','a_title','a_link','a_owner','a_due'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('a_category').value = '';
+  populateActionCategoryOptions('');
   document.getElementById('a_priority').value='Medium';
   document.getElementById('a_status').value='Pending';
   document.getElementById('actionModal').classList.add('open');
@@ -1355,7 +1351,7 @@ function editAction(id){
   document.getElementById('actionId').value = a.id;
   document.getElementById('a_title').value = a.title;
   document.getElementById('a_link').value = a.link||'';
-  document.getElementById('a_category').value = a.category||'';
+  populateActionCategoryOptions(a.category||'');
   document.getElementById('a_owner').value = a.owner||'';
   document.getElementById('a_due').value = a.due||'';
   document.getElementById('a_priority').value = a.priority;
@@ -1854,4 +1850,4 @@ function escapeHtml(str){
 init();
 </script>
 </body>
-</h
+</html>

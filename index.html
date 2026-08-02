@@ -644,6 +644,17 @@
   </div>
 </div>
 
+<!-- Evidence Preview Modal -->
+<div class="modal-overlay" id="evidencePreviewModal">
+  <div class="modal">
+    <h2 id="epv_title">Evidence</h2>
+    <div id="epv_body"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('evidencePreviewModal')">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Evidence Modal -->
 <div class="modal-overlay" id="evidenceModal">
   <div class="modal">
@@ -1176,8 +1187,7 @@ function renderGaps(){
         </select>
       </td>
       <td style="min-width:200px;">
-        ${g.evidenceFileData ? `<a href="${g.evidenceFileData}" download="${escapeHtml(g.evidenceFileName||'evidence')}" style="color:var(--green-dark);font-weight:600;display:block;margin-bottom:4px;">📎 ${escapeHtml(g.evidenceFileName||'file')}</a>` : ''}
-        ${g.notes ? `<div style="color:var(--text-muted);font-size:12px;margin-bottom:4px;">${escapeHtml(g.notes)}</div>` : ''}
+        ${(g.evidenceFileData||g.notes) ? `<button class="btn btn-outline btn-sm" style="margin-bottom:4px;" onclick="viewEvidence('gap', ${g.id})">👁 View Evidence</button><br>` : ''}
         <button class="btn btn-outline btn-sm" onclick="openEvidenceModal('gap', ${g.id})">${(g.evidenceFileData||g.notes) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
       </td>
       <td style="min-width:110px;">
@@ -1296,8 +1306,7 @@ function renderActions(){
         <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${pct}%</div>
       </td>
       <td style="min-width:150px;">
-        ${a.evidenceFileData ? `<a href="${a.evidenceFileData}" download="${escapeHtml(a.evidenceFileName||'evidence')}" style="color:var(--green-dark);font-weight:600;display:block;margin-bottom:4px;">📎 ${escapeHtml(a.evidenceFileName||'file')}</a>` : ''}
-        ${a.evidenceNote ? `<div style="color:var(--text-muted);font-size:12px;margin-bottom:4px;">${escapeHtml(a.evidenceNote)}</div>` : ''}
+        ${(a.evidenceFileData||a.evidenceNote) ? `<button class="btn btn-outline btn-sm" style="margin-bottom:4px;" onclick="viewEvidence('action', ${a.id})">👁 View Evidence</button><br>` : ''}
         <button class="btn btn-outline btn-sm" onclick="openEvidenceModal('action', ${a.id})">${(a.evidenceFileData||a.evidenceNote) ? '✏️ Edit Evidence' : '+ Add Evidence'}</button>
       </td>
       <td class="actions-cell">
@@ -1376,6 +1385,23 @@ async function saveAction(){
   closeModal('actionModal');
   renderActions(); renderDashboard(); renderReports();
   toast('Action saved');
+}
+function viewEvidence(context, id){
+  const item = context==='gap' ? gaps.find(x=>x.id===id) : actions.find(x=>x.id===id);
+  if(!item) return;
+  document.getElementById('epv_title').textContent = context==='gap' ? item.cat : item.title;
+  let body = '';
+  if(item.evidenceFileData){
+    if(item.evidenceFileData.startsWith('data:image')){
+      body += `<img src="${item.evidenceFileData}" style="width:100%;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;" alt="Evidence image">`;
+    } else {
+      body += `<a href="${item.evidenceFileData}" download="${escapeHtml(item.evidenceFileName||'evidence')}" class="btn btn-outline" style="margin-bottom:12px;display:inline-flex;">📎 Open ${escapeHtml(item.evidenceFileName||'file')}</a>`;
+    }
+  }
+  const note = context==='gap' ? item.notes : item.evidenceNote;
+  body += `<div style="font-size:13px;color:var(--text-muted);white-space:pre-wrap;">${note ? escapeHtml(note) : 'No note recorded.'}</div>`;
+  document.getElementById('epv_body').innerHTML = body;
+  document.getElementById('evidencePreviewModal').classList.add('open');
 }
 function openEvidenceModal(context, id){
   const item = context==='gap' ? gaps.find(x=>x.id===id) : actions.find(x=>x.id===id);
@@ -1828,4 +1854,4 @@ function escapeHtml(str){
 init();
 </script>
 </body>
-</html>
+</h
